@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="02a6e104-b1b1-4e67-8df3-12dc1b83e168" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="tsconfig.json" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1XnzaWiEfQGsGSPSqu5s02XaeoL" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="02a6e104-b1b1-4e67-8df3-12dc1b83e168" name="Default Changelist" comment="" />
+      <created>1581696709181</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1581696709181</updated>
+      <workItem from="1581696710818" duration="5919000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="969" y="674" width="824" height="538" key="find.popup" timestamp="1581701221827">
+      <screen x="0" y="23" width="2560" height="1337" />
+    </state>
+    <state x="969" y="674" width="824" height="538" key="find.popup/0.23.2560.1337@0.23.2560.1337" timestamp="1581701221827" />
+    <state x="893" y="348" width="670" height="675" key="run.anything.popup" timestamp="1581701707153">
+      <screen x="0" y="23" width="2560" height="1337" />
+    </state>
+    <state x="893" y="348" width="670" height="675" key="run.anything.popup/0.23.2560.1337@0.23.2560.1337" timestamp="1581701707153" />
+  </component>
+</project>

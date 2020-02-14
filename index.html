@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css"
+          rel="stylesheet" />
+    <link href="assets/css/fresh-bootstrap-table.css" rel="stylesheet" />
+
+    <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Roboto:400,700,300" rel="stylesheet" type="text/css">
+
+</head>
+<body style="width: 1200px;padding: 100px;">
+<section>
+    <h3>
+        数据来源 武汉红十字会
+    </h3>
+    <a href="http://www.wuhanrc.org.cn/dtzx/jzgst.htm">武汉红十字会官网</a>
+</section>
+<section>
+    <h3>数据汇总查询表格</h3>
+    <div>
+        <table id="table">
+            <thead>
+            <tr>
+                <th data-field="接收单位">接收单位</th>
+                <th data-field="品名">品名</th>
+                <th data-field="规格">规格</th>
+                <th data-field="计量单位">计量单位</th>
+                <th data-field="数量">数量</th>
+                <th data-field="时间">时间</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</section>
+
+<!--<section>-->
+<!--    <h3>分类查询</h3>-->
+<!--    <div>-->
+<!--        开发中-->
+<!--    </div>-->
+<!--</section>-->
+<!--<section>-->
+<!--    <h3>地图显示</h3>-->
+<!--    <div>-->
+<!--        开发中-->
+<!--    </div>-->
+<!--</section>-->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
+<script>
+    var companySet=new Set();
+    var merge = function () {
+        return Array.prototype.concat.apply([], arguments)
+    }
+    var Format = function (data, date) {
+        //add date
+        var newData = [];
+        for (var i = 0; i < data.length; i++) {
+            newData.push({
+                ...data[i],
+                '时间': date
+            })
+            //add to companySet
+            companySet.add(data[i]['接收单位'])
+        }
+        return newData
+    }
+
+
+    var $table = $('#table')
+    $.when(
+        $.get('./0130.json'),
+        $.get('./0201.json'),
+        $.get('./0202.json'),
+        $.get('./0203.json'),
+        $.get('./0204.json'),
+        $.get('./0206.json'),
+        $.get('./0207.json'),
+        $.get('./0208.json'),
+        $.get('./0209.json'),
+        $.get('./0210.json'),
+        $.get('./0211.json'),
+        $.get('./0212.json'),
+        $.get('./0213.json'),
+    )
+        .then(function (data_0130, data_0201, data_0202, data_0203, data_0204, data_0206, data_0207, data_0208, data_0209, data_0210, data_0211, data_0212, data_0213) {
+            var data = merge(
+                Format(data_0130[0],'1月30日'),
+                Format(data_0201[0],'2月01日'),
+                Format(data_0202[0],'2月02日'),
+                Format(data_0203[0],'2月03日'),
+                Format(data_0204[0],'2月04日'),
+                Format(data_0206[0],'2月06日'),
+                Format(data_0207[0],'2月07日'),
+                Format(data_0208[0],'2月08日'),
+                Format(data_0209[0],'2月09日'),
+                Format(data_0210[0],'2月10日'),
+                Format(data_0211[0],'2月11日'),
+                Format(data_0212[0],'2月12日'),
+                Format(data_0213[0],'2月13日')
+            );
+            console.log(companySet)
+            $(function () {
+                $table.bootstrapTable({
+                    data: data,
+                    search: true,
+                    pageNumber: 1, //初始化加载第一页
+                    pagination: true,//是否分页
+                    sidePagination: 'client',//server:服务器端分页|client：前端分页
+                    pageSize: 20,//单页记录数
+                    pageList: [20, 40, 60, 100],//可选择单页记录数
+                })
+            })
+        })
+</script>
+</body>
+</html>
