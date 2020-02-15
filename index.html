@@ -31,12 +31,37 @@
                 <th data-field="计量单位">计量单位</th>
                 <th data-field="数量">数量</th>
                 <th data-field="时间">时间</th>
+                <th data-field="估算量">估算量</th>
+                <th data-field="地区">地区</th>
+                <th data-field="接收单位类型">接收单位类型</th>
+                <th data-field="物资类型">物资类型</th>
             </tr>
             </thead>
         </table>
     </div>
 </section>
-
+<section>
+    <h3>口罩 查询表格</h3>
+    <div>
+        <table id="maskTable">
+            <thead>
+            <tr>
+                <th data-field="接收单位">接收单位</th>
+                <th data-field="品名">品名</th>
+                <th data-field="规格">规格</th>
+                <th data-field="计量单位">计量单位</th>
+                <th data-field="数量">数量</th>
+                <th data-field="时间">时间</th>
+                <th data-field="估算量">估算量</th>
+                <th data-field="地区">地区</th>
+                <th data-field="接收单位类型">接收单位类型</th>
+                <th data-field="物资类型">物资类型</th>
+            </tr>
+            </thead>
+        </table>
+        <div id="maskTableTotal"></div>
+    </div>
+</section>
 <!--<section>-->
 <!--    <h3>分类查询</h3>-->
 <!--    <div>-->
@@ -58,27 +83,10 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
+<script src="./utils.js"></script>
 <script>
-    var companySet=new Set();
-    var merge = function () {
-        return Array.prototype.concat.apply([], arguments)
-    }
-    var Format = function (data, date) {
-        //add date
-        var newData = [];
-        for (var i = 0; i < data.length; i++) {
-            newData.push({
-                ...data[i],
-                '时间': date
-            })
-            //add to companySet
-            companySet.add(data[i]['接收单位'])
-        }
-        return newData
-    }
-
-
     var $table = $('#table')
+    var $maskTable = $('#maskTable')
     $.when(
         $.get('./0130.json'),
         $.get('./0201.json'),
@@ -96,21 +104,20 @@
     )
         .then(function (data_0130, data_0201, data_0202, data_0203, data_0204, data_0206, data_0207, data_0208, data_0209, data_0210, data_0211, data_0212, data_0213) {
             var data = merge(
-                Format(data_0130[0],'1月30日'),
-                Format(data_0201[0],'2月01日'),
-                Format(data_0202[0],'2月02日'),
-                Format(data_0203[0],'2月03日'),
-                Format(data_0204[0],'2月04日'),
-                Format(data_0206[0],'2月06日'),
-                Format(data_0207[0],'2月07日'),
-                Format(data_0208[0],'2月08日'),
-                Format(data_0209[0],'2月09日'),
-                Format(data_0210[0],'2月10日'),
-                Format(data_0211[0],'2月11日'),
-                Format(data_0212[0],'2月12日'),
-                Format(data_0213[0],'2月13日')
+                Format(data_0130[0], '1月30日'),
+                Format(data_0201[0], '2月01日'),
+                Format(data_0202[0], '2月02日'),
+                Format(data_0203[0], '2月03日'),
+                Format(data_0204[0], '2月04日'),
+                Format(data_0206[0], '2月06日'),
+                Format(data_0207[0], '2月07日'),
+                Format(data_0208[0], '2月08日'),
+                Format(data_0209[0], '2月09日'),
+                Format(data_0210[0], '2月10日'),
+                Format(data_0211[0], '2月11日'),
+                Format(data_0212[0], '2月12日'),
+                Format(data_0213[0], '2月13日')
             );
-            console.log(companySet)
             $(function () {
                 $table.bootstrapTable({
                     data: data,
@@ -118,7 +125,23 @@
                     pageNumber: 1, //初始化加载第一页
                     pagination: true,//是否分页
                     sidePagination: 'client',//server:服务器端分页|client：前端分页
-                    pageSize: 20,//单页记录数
+                    pageSize: 10,//单页记录数
+                    pageList: [20, 40, 60, 100],//可选择单页记录数
+                })
+                var maskData = data.filter(item => item['物资类型'] == '口罩');
+                const reducer = (accumulator, currentValue) => {
+                    return (parseInt(accumulator) || 0) + (parseInt(currentValue) || 0);
+                }
+                var maskDataTotal = maskData.map(el => el['估算量'])
+                    .reduce(reducer)
+                $('#maskTableTotal')[0].innerHTML = '共计估算 ：' + maskDataTotal + ' 个'
+                $maskTable.bootstrapTable({
+                    data: maskData,
+                    search: true,
+                    pageNumber: 1, //初始化加载第一页
+                    pagination: true,//是否分页
+                    sidePagination: 'client',//server:服务器端分页|client：前端分页
+                    pageSize: 10,//单页记录数
                     pageList: [20, 40, 60, 100],//可选择单页记录数
                 })
             })
