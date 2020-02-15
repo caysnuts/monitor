@@ -211,7 +211,7 @@ function Format(data, date) {
             '地区': getLocation(data[i]['接收单位']),
             '接收单位类型': getCompanyType(data[i]['接收单位']),
             '物资类型': getProductType(data[i]['品名']),
-            '口罩类型': getMaskProductType(data[i]),
+            '二级分类': getMaskProductType(data[i]),
         })
         //add to companySet
         companySet.add(data[i]['接收单位'])

@@ -40,6 +40,7 @@
                 <th data-field="地区">地区</th>
                 <th data-field="接收单位类型">接收单位类型</th>
                 <th data-field="物资类型">物资类型</th>
+                <th data-field="二级分类">二级分类</th>
             </tr>
             </thead>
         </table>
@@ -60,7 +61,7 @@
                 <th data-field="估算量">估算量</th>
                 <th data-field="地区">地区</th>
                 <th data-field="接收单位类型">接收单位类型</th>
-                <th data-field="口罩类型">口罩类型</th>
+                <th data-field="二级分类">二级分类</th>
             </tr>
             </thead>
         </table>
@@ -132,6 +133,7 @@
                 <th data-field="估算量">估算量</th>
                 <th data-field="地区">地区</th>
                 <th data-field="接收单位类型">接收单位类型</th>
+                <th data-field="二级分类">二级分类</th>
             </tr>
             </thead>
         </table>
@@ -219,6 +221,10 @@
     var $maskStaticTable4 = $('#maskStaticTable4')
 
     var $suitTable = $('#suitTable')
+    var $suitStaticTable = $('#suitStaticTable')
+    var $suitStaticTable2 = $('#suitStaticTable2')
+    var $suitStaticTable3 = $('#suitStaticTable3')
+    var $suitStaticTable4 = $('#suitStaticTable4')
     $.when(
         $.get('./0130.json'),
         $.get('./0201.json'),
@@ -263,9 +269,9 @@
                 //口罩数据
                 var maskData = data.filter(item => item['物资类型'] == '口罩');
                 //n95口罩数据
-                var maskN95Data = maskData.filter(item => item['口罩类型'] == 'N95');
+                var maskN95Data = maskData.filter(item => item['二级分类'] == 'N95');
                 //医用口罩数据
-                var maskDoctorData = maskData.filter(item => item['口罩类型'] == '医用');
+                var maskDoctorData = maskData.filter(item => item['二级分类'] == '医用');
                 //口罩总数
                 var maskDataTotal = maskData.map(item => item['估算量'])
                     .reduce(reducer);
@@ -331,7 +337,27 @@
 
                 //防护服数据
                 var suitData = data.filter(item => item['物资类型'] == '防护服');
-
+                //防护服总数
+                var suitDataTotal = suitData.map(item => item['估算量'])
+                    .reduce(reducer);
+                //医用防护服数据
+                var suitDoctorData = suitData.filter(item => item['二级分类'] == '医用');
+                //医用防护服总数
+                var suitDoctorDataTotal = suitDoctorData.map(item => item['估算量'])
+                    .reduce(reducer);
+                var suitStaticData = [
+                    {
+                        '类型': '全部',
+                        '数量': suitDataTotal,
+                        '占比': '100 %'
+                    },
+                    {
+                        '类型': '医用',
+                        '数量': suitDoctorDataTotal,
+                        '占比': Number(suitDoctorDataTotal * 100 / suitDataTotal)
+                            .toFixed(2) + ' %'
+                    },
+                ]
                 $suitTable.bootstrapTable({
                     data: suitData,
                     search: true,
@@ -340,6 +366,24 @@
                     sidePagination: 'client',//server:服务器端分页|client：前端分页
                     pageSize: 10,//单页记录数
                     pageList: [20, 40, 60, 100],//可选择单页记录数
+                })
+                $suitStaticTable.bootstrapTable({
+                    data: suitStaticData,
+                    pageNumber: 1, //初始化加载第一页
+                    pagination: false,//是否分页
+                    sidePagination: 'client',//server:服务器端分页|client：前端分页
+                })
+                $suitStaticTable2.bootstrapTable({
+                    data: staticMask(suitDataTotal, suitData),
+                    pageNumber: 1, //初始化加载第一页
+                    pagination: false,//是否分页
+                    sidePagination: 'client',//server:服务器端分页|client：前端分页
+                })
+                $suitStaticTable4.bootstrapTable({
+                    data: staticMask(suitDoctorDataTotal, suitDoctorData),
+                    pageNumber: 1, //初始化加载第一页
+                    pagination: false,//是否分页
+                    sidePagination: 'client',//server:服务器端分页|client：前端分页
                 })
             })
         })
