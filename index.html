@@ -12,6 +12,11 @@
     <link href="http://fonts.googleapis.com/css?family=Roboto:400,700,300" rel="stylesheet" type="text/css">
 
 </head>
+<style>
+    tbody td {
+        text-align: right;
+    }
+</style>
 <body style="width: 1200px;padding: 100px;">
 <section>
     <h3>
@@ -55,11 +60,64 @@
                 <th data-field="估算量">估算量</th>
                 <th data-field="地区">地区</th>
                 <th data-field="接收单位类型">接收单位类型</th>
-                <th data-field="物资类型">物资类型</th>
+                <th data-field="口罩类型">口罩类型</th>
             </tr>
             </thead>
         </table>
         <div id="maskTableTotal"></div>
+        <div id="maskN95TableTotal"></div>
+        <div id="maskDoctorTableTotal"></div>
+    </div>
+    <h4>分类统计</h4>
+    <div style="display: flex;flex-direction: row">
+        <div style="width: 200px;margin-left: 20px">
+            <h5>-</h5>
+            <table id="maskStaticTable" style="width: 200px">
+                <thead>
+                <tr>
+                    <th data-field="类型">类型</th>
+                    <th data-field="数量">数量</th>
+                    <th data-field="占比">占比</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <div style="width: 300px;margin-left: 20px">
+            <h5>所有口罩</h5>
+            <table id="maskStaticTable2" style="width: 300px">
+                <thead>
+                <tr>
+                    <th data-field="类型">类型</th>
+                    <th data-field="数量">数量</th>
+                    <th data-field="占比">占比</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <div style="width: 300px;margin-left: 20px">
+            <h5>N95</h5>
+            <table id="maskStaticTable3" style="width: 300px">
+                <thead>
+                <tr>
+                    <th data-field="类型">类型</th>
+                    <th data-field="数量">数量</th>
+                    <th data-field="占比">占比</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <div style="width: 300px;margin-left: 20px">
+            <h5>医用</h5>
+            <table id="maskStaticTable4" style="width: 300px">
+                <thead>
+                <tr>
+                    <th data-field="类型">类型</th>
+                    <th data-field="数量">数量</th>
+                    <th data-field="占比">占比</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
     </div>
 </section>
 <!--<section>-->
@@ -87,6 +145,10 @@
 <script>
     var $table = $('#table')
     var $maskTable = $('#maskTable')
+    var $maskStaticTable = $('#maskStaticTable')
+    var $maskStaticTable2 = $('#maskStaticTable2')
+    var $maskStaticTable3 = $('#maskStaticTable3')
+    var $maskStaticTable4 = $('#maskStaticTable4')
     $.when(
         $.get('./0130.json'),
         $.get('./0201.json'),
@@ -128,13 +190,41 @@
                     pageSize: 10,//单页记录数
                     pageList: [20, 40, 60, 100],//可选择单页记录数
                 })
+                //口罩数据
                 var maskData = data.filter(item => item['物资类型'] == '口罩');
-                const reducer = (accumulator, currentValue) => {
-                    return (parseInt(accumulator) || 0) + (parseInt(currentValue) || 0);
-                }
-                var maskDataTotal = maskData.map(el => el['估算量'])
-                    .reduce(reducer)
-                $('#maskTableTotal')[0].innerHTML = '共计估算 ：' + maskDataTotal + ' 个'
+                //n95口罩数据
+                var maskN95Data = maskData.filter(item => item['口罩类型'] == 'N95');
+                //医用口罩数据
+                var maskDoctorData = maskData.filter(item => item['口罩类型'] == '医用');
+                //口罩总数
+                var maskDataTotal = maskData.map(item => item['估算量'])
+                    .reduce(reducer);
+                //N95口罩总数
+                var maskN95DataTotal = maskN95Data.map(item => item['估算量'])
+                    .reduce(reducer);
+                //医用口罩总数
+                var maskDoctorDataTotal = maskDoctorData.map(item => item['估算量'])
+                    .reduce(reducer);
+                var maskStaticData = [
+                    {
+                        '类型': '全部',
+                        '数量': maskDataTotal,
+                        '占比': '100 %'
+                    },
+                    {
+                        '类型': 'N95',
+                        '数量': maskN95DataTotal,
+                        '占比': Number(maskN95DataTotal * 100 / maskDataTotal)
+                            .toFixed(2) + ' %'
+                    },
+                    {
+                        '类型': '医用',
+                        '数量': maskDoctorDataTotal,
+                        '占比': Number(maskDoctorDataTotal * 100 / maskDataTotal)
+                            .toFixed(2) + ' %'
+                    },
+                ]
+
                 $maskTable.bootstrapTable({
                     data: maskData,
                     search: true,
@@ -143,6 +233,30 @@
                     sidePagination: 'client',//server:服务器端分页|client：前端分页
                     pageSize: 10,//单页记录数
                     pageList: [20, 40, 60, 100],//可选择单页记录数
+                })
+                $maskStaticTable.bootstrapTable({
+                    data: maskStaticData,
+                    pageNumber: 1, //初始化加载第一页
+                    pagination: false,//是否分页
+                    sidePagination: 'client',//server:服务器端分页|client：前端分页
+                })
+                $maskStaticTable2.bootstrapTable({
+                    data: staticMask(maskDataTotal, maskData),
+                    pageNumber: 1, //初始化加载第一页
+                    pagination: false,//是否分页
+                    sidePagination: 'client',//server:服务器端分页|client：前端分页
+                })
+                $maskStaticTable3.bootstrapTable({
+                    data: staticMask(maskN95DataTotal, maskN95Data),
+                    pageNumber: 1, //初始化加载第一页
+                    pagination: false,//是否分页
+                    sidePagination: 'client',//server:服务器端分页|client：前端分页
+                })
+                $maskStaticTable4.bootstrapTable({
+                    data: staticMask(maskDoctorDataTotal, maskDoctorData),
+                    pageNumber: 1, //初始化加载第一页
+                    pagination: false,//是否分页
+                    sidePagination: 'client',//server:服务器端分页|client：前端分页
                 })
             })
         })
