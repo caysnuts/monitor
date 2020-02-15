@@ -64,9 +64,6 @@
             </tr>
             </thead>
         </table>
-        <div id="maskTableTotal"></div>
-        <div id="maskN95TableTotal"></div>
-        <div id="maskDoctorTableTotal"></div>
     </div>
     <h4>分类统计</h4>
     <div style="display: flex;flex-direction: row">
@@ -120,6 +117,77 @@
         </div>
     </div>
 </section>
+<section>
+    <h3>防护服 查询表格</h3>
+    <div>
+        <table id="suitTable">
+            <thead>
+            <tr>
+                <th data-field="接收单位">接收单位</th>
+                <th data-field="品名">品名</th>
+                <th data-field="规格">规格</th>
+                <th data-field="计量单位">计量单位</th>
+                <th data-field="数量">数量</th>
+                <th data-field="时间">时间</th>
+                <th data-field="估算量">估算量</th>
+                <th data-field="地区">地区</th>
+                <th data-field="接收单位类型">接收单位类型</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+    <h4>分类统计</h4>
+    <div style="display: flex;flex-direction: row">
+        <div style="width: 200px;margin-left: 20px">
+            <h5>-</h5>
+            <table id="suitStaticTable" style="width: 200px">
+                <thead>
+                <tr>
+                    <th data-field="类型">类型</th>
+                    <th data-field="数量">数量</th>
+                    <th data-field="占比">占比</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <div style="width: 300px;margin-left: 20px">
+            <h5>所有防护服</h5>
+            <table id="suitStaticTable2" style="width: 300px">
+                <thead>
+                <tr>
+                    <th data-field="类型">类型</th>
+                    <th data-field="数量">数量</th>
+                    <th data-field="占比">占比</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <div style="width: 300px;margin-left: 20px">
+            <h5>工业</h5>
+            <table id="suitStaticTable3" style="width: 300px">
+                <thead>
+                <tr>
+                    <th data-field="类型">类型</th>
+                    <th data-field="数量">数量</th>
+                    <th data-field="占比">占比</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <div style="width: 300px;margin-left: 20px">
+            <h5>医用</h5>
+            <table id="suitStaticTable4" style="width: 300px">
+                <thead>
+                <tr>
+                    <th data-field="类型">类型</th>
+                    <th data-field="数量">数量</th>
+                    <th data-field="占比">占比</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</section>
 <!--<section>-->
 <!--    <h3>分类查询</h3>-->
 <!--    <div>-->
@@ -149,6 +217,8 @@
     var $maskStaticTable2 = $('#maskStaticTable2')
     var $maskStaticTable3 = $('#maskStaticTable3')
     var $maskStaticTable4 = $('#maskStaticTable4')
+
+    var $suitTable = $('#suitTable')
     $.when(
         $.get('./0130.json'),
         $.get('./0201.json'),
@@ -257,6 +327,19 @@
                     pageNumber: 1, //初始化加载第一页
                     pagination: false,//是否分页
                     sidePagination: 'client',//server:服务器端分页|client：前端分页
+                })
+
+                //防护服数据
+                var suitData = data.filter(item => item['物资类型'] == '防护服');
+
+                $suitTable.bootstrapTable({
+                    data: suitData,
+                    search: true,
+                    pageNumber: 1, //初始化加载第一页
+                    pagination: true,//是否分页
+                    sidePagination: 'client',//server:服务器端分页|client：前端分页
+                    pageSize: 10,//单页记录数
+                    pageList: [20, 40, 60, 100],//可选择单页记录数
                 })
             })
         })

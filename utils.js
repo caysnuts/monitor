@@ -147,6 +147,8 @@ function getProductType(string) {
         return '口罩'
     } else if (string.indexOf('护目镜') >= 0) {
         return '护目镜'
+    } else if (string.indexOf('防护服') >= 0) {
+        return '防护服'
     } else if (string.indexOf('手术服') >= 0) {
         return '手术服'
     } else if (string.indexOf('手套') >= 0) {
