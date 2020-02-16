@@ -225,14 +225,12 @@ const reducer = (accumulator, currentValue) => {
 }
 
 function staticMask(maskDataTotal, maskData) {
-    console.log('start =============')
     //医院
     var maskDataTotalToHospital = 0;
     try {
         maskDataTotalToHospital = maskData.filter(item => item['接收单位类型'] == '医院')
             .map(item => item['估算量'])
             .reduce(reducer);
-        console.log('医院', maskDataTotalToHospital)
     } catch (e) {
 
     }
@@ -242,7 +240,6 @@ function staticMask(maskDataTotal, maskData) {
         maskDoctorDataTotalToCommand = maskData.filter(item => item['接收单位类型'] == '指挥部')
             .map(item => item['估算量'])
             .reduce(reducer);
-        console.log('指挥部', maskDoctorDataTotalToCommand)
     } catch (e) {
 
     }
@@ -252,7 +249,6 @@ function staticMask(maskDataTotal, maskData) {
         maskDoctorDataTotalToCommunity = maskData.filter(item => item['接收单位类型'] == '社区')
             .map(item => item['估算量'])
             .reduce(reducer);
-        console.log('社区', maskDoctorDataTotalToCommunity)
     } catch (e) {
 
     }
@@ -262,7 +258,6 @@ function staticMask(maskDataTotal, maskData) {
         maskDoctorDataTotalToHealth = maskData.filter(item => item['接收单位类型'] == '卫健局')
             .map(item => item['估算量'])
             .reduce(reducer);
-        console.log('卫健局', maskDoctorDataTotalToHealth)
     } catch (e) {
 
     }
@@ -272,7 +267,6 @@ function staticMask(maskDataTotal, maskData) {
         maskDoctorDataTotalToFangcang = maskData.filter(item => item['接收单位类型'] == '方舱')
             .map(item => item['估算量'])
             .reduce(reducer);
-        console.log('方舱', maskDoctorDataTotalToFangcang)
     } catch (e) {
 
     }
@@ -282,7 +276,6 @@ function staticMask(maskDataTotal, maskData) {
         maskDoctorDataTotalToCompany = maskData.filter(item => item['接收单位类型'] == '公司')
             .map(item => item['估算量'])
             .reduce(reducer);
-        console.log('方舱', maskDoctorDataTotalToCompany)
     } catch (e) {
 
     }

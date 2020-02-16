@@ -1,0 +1,40 @@
+body {
+    width: 1200px;
+    padding: 100px;
+}
+
+tbody td {
+    text-align: right;
+}
+
+h1 {
+    text-align: center;
+    font-size: 40px;
+}
+
+h2 {
+    text-align: center;
+    font-size: 32px;
+}
+
+h3 {
+    text-align: center;
+}
+
+section {
+    padding-top: 20px;
+}
+
+#tabs {
+    margin-top: 20px;
+}
+
+.static {
+    display: flex;
+    width: 95%;
+    flex-wrap: wrap;
+}
+
+.static > div {
+    padding-left: 20px;
+}
