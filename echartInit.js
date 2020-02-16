@@ -43,41 +43,41 @@ function initChart(domId,data){
             {
                 name: '医院',
                 type: 'line',
-                stack: '总量',
+                stack: '医院',
                 areaStyle: {},
                 data: data['医院']
             },
             {
                 name: '指挥部',
                 type: 'line',
-                stack: '总量',
+                stack: '指挥部',
                 areaStyle: {},
                 data: data['指挥部']
             },
             {
                 name: '社区',
                 type: 'line',
-                stack: '总量',
+                stack: '社区',
                 areaStyle: {},
                 data: data['社区']
             },
             {
                 name: '卫健局',
                 type: 'line',
-                stack: '总量',
+                stack: '卫健局',
                 areaStyle: {},
                 data: data['卫健局']
             },
             {
                 name: '方舱',
                 type: 'line',
-                stack: '总量',
+                stack: '方舱',
                 areaStyle: {},
                 data: data['方舱']
             }, {
                 name: '公司',
                 type: 'line',
-                stack: '总量',
+                stack: '公司',
                 areaStyle: {},
                 data: data['公司']
             }
