@@ -27,6 +27,7 @@
         <li><a href="#tabs-1">数据汇总</a></li>
         <li><a href="#tabs-2">口罩</a></li>
         <li><a href="#tabs-3">防护服</a></li>
+        <li><a href="#tabs-4">定点医院-前10</a></li>
     </ul>
     <div id="tabs-1">
         <section>
@@ -143,7 +144,6 @@
                     <div id="maskMainChartDoctor" style="width: 900px;height:600px;"></div>
                 </div>
             </section>
-
         </section>
     </div>
     <div id="tabs-3">
@@ -219,6 +219,89 @@
                     <div id="suitMainChartDoctor" style="width: 900px;height:600px;"></div>
                 </div>
             </section>
+        </section>
+    </div>
+    <div id="tabs-4">
+        <h3>床位统计 2月15日</h3>
+        <table id="hospitalBedTableSuit" style="width: 500px">
+            <thead>
+            <tr>
+                <th data-field="医院名称">医院</th>
+                <th data-field="开放床位">开放床位</th>
+                <th data-field="已用床位">已用床位</th>
+                <th data-field="空床位">空床位</th>
+            </tr>
+            </thead>
+        </table>
+        <h3>口罩</h3>
+        <section>
+            <div class="static">
+                <div>
+                    <h5 id="hospitalMaskStaticTitle0">-</h5>
+                    <table id="hospitalMaskStaticTable0" style="width: 280px">
+                        <thead>
+                        <tr>
+                            <th data-field="类型">类型</th>
+                            <th data-field="数量">数量</th>
+                            <th data-field="占比">占比</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div>
+                    <h5 id="hospitalMaskStaticTitle1">-</h5>
+                    <table id="hospitalMaskStaticTable1" style="width: 280px">
+                        <thead>
+                        <tr>
+                            <th data-field="类型">类型</th>
+                            <th data-field="数量">数量</th>
+                            <th data-field="占比">占比</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div>
+                    <h5 id="hospitalMaskStaticTitle2">-</h5>
+                    <table id="hospitalMaskStaticTable2" style="width: 280px">
+                        <thead>
+                        <tr>
+                            <th data-field="类型">类型</th>
+                            <th data-field="数量">数量</th>
+                            <th data-field="占比">占比</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <h3>防护服</h3>
+        <section>
+            <div class="static">
+                <div>
+                    <h5 id="hospitalSuitStaticTitle0">-</h5>
+                    <table id="hospitalSuitStaticTable0" style="width: 300px">
+                        <thead>
+                        <tr>
+                            <th data-field="类型">类型</th>
+                            <th data-field="数量">数量</th>
+                            <th data-field="占比">占比</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div>
+                    <h5 id="hospitalSuitStaticTitle1">-</h5>
+                    <table id="hospitalSuitStaticTable1" style="width: 300px">
+                        <thead>
+                        <tr>
+                            <th data-field="类型">类型</th>
+                            <th data-field="数量">数量</th>
+                            <th data-field="占比">占比</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
         </section>
     </div>
 </div>

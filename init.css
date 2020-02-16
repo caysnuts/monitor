@@ -38,3 +38,7 @@ section {
 .static > div {
     padding-left: 20px;
 }
+
+#tabs-4 > h3{
+    padding:30px 0 ;
+}

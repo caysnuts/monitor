@@ -51,6 +51,8 @@ function initMaskDataAnalysis(data) {
                 .toFixed(2) + ' %'
         },
     ]
+    let staticArray = ['医院', '指挥部', '社区', '卫健局', '方舱', '公司'];
+    let staticField = '接收单位类型';
     return {
         totalData: maskData,
         staticData: [
@@ -62,17 +64,17 @@ function initMaskDataAnalysis(data) {
             {
                 name: '所有',
                 type: 'all',
-                data: staticMask(maskDataTotal, maskData)
+                data: staticMaskCommon(maskDataTotal, maskData, staticArray, staticField)
             },
             {
                 name: 'N95',
                 type: 'N95',
-                data: staticMask(maskN95DataTotal, maskN95Data)
+                data: staticMaskCommon(maskN95DataTotal, maskN95Data, staticArray, staticField)
             },
             {
                 name: '医用',
                 type: 'doctor',
-                data: staticMask(maskDoctorDataTotal, maskDoctorData)
+                data: staticMaskCommon(maskDoctorDataTotal, maskDoctorData, staticArray, staticField)
             },
         ]
     }
@@ -112,12 +114,12 @@ function initSuitDataAnalysis(data) {
             {
                 name: '所有',
                 type: 'all',
-                data: staticMask(suitDataTotal, suitData)
+                data: staticMaskCommon(suitDataTotal, suitData, ['医院', '指挥部', '社区', '卫健局', '方舱', '公司'], '接收单位类型')
             },
             {
                 name: '医用',
                 type: 'doctor',
-                data: staticMask(suitDoctorDataTotal, suitDoctorData)
+                data: staticMaskCommon(suitDoctorDataTotal, suitDoctorData, ['医院', '指挥部', '社区', '卫健局', '方舱', '公司'], '接收单位类型')
             },
         ]
     }
@@ -146,6 +148,119 @@ function initData(data, domId) {
             })
     }
 }
+
+function initHospitalData(data) {
+    if (data && data.length > 0) {
+        return data.map(item => {
+            let name = item['接收单位'];
+            if (name.indexOf('金银潭') >= 0) {
+                return {
+                    ...item,
+                    hospitalName: '市金银潭医院'
+                }
+            } else if (name.indexOf('武昌') >= 0) {
+                return {
+                    ...item,
+                    hospitalName: '市武昌医院'
+                }
+            } else if (name.indexOf('四医院') >= 0) {
+                return {
+                    ...item,
+                    hospitalName: '市第四医院'
+                }
+            } else if (name.indexOf('中心医院') >= 0) {
+                return {
+                    ...item,
+                    hospitalName: '市中心医院'
+                }
+            } else if (name.indexOf('三医院') >= 0) {
+                return {
+                    ...item,
+                    hospitalName: '市第三医院'
+                }
+            } else if (name.indexOf('同济') >= 0) {
+                return {
+                    ...item,
+                    hospitalName: '同济'
+                }
+            } else if (name.indexOf('协和') >= 0) {
+                return {
+                    ...item,
+                    hospitalName: '协和'
+                }
+            } else if (name.indexOf('省人民医院') >= 0) {
+                return {
+                    ...item,
+                    hospitalName: '省人民医院'
+                }
+            } else if (name.indexOf('火神山') >= 0) {
+                return {
+                    ...item,
+                    hospitalName: '火神山医院'
+                }
+            } else if (name.indexOf('一医院') >= 0) {
+                return {
+                    ...item,
+                    hospitalName: '市第一医院'
+                }
+            } else {
+                return {
+                    ...item,
+                    hospitalName: '其他'
+                }
+            }
+        })
+    }
+}
+
+function initHospitalDataAnalysis(data) {
+    //口罩数据
+    var maskData = data.filter(item => item['接收单位类型'] == '医院');
+    //n95口罩数据
+    var maskN95Data = maskData.filter(item => item['二级分类'] == 'N95');
+    //医用口罩数据
+    var maskDoctorData = maskData.filter(item => item['二级分类'] == '医用');
+    //口罩总数
+    var maskDataTotal = getTotalCount(maskData)
+    //N95口罩总数
+    var maskN95DataTotal = getTotalCount(maskN95Data)
+    //医用口罩总数
+    var maskDoctorDataTotal = getTotalCount(maskDoctorData)
+    let staticArray = ['市金银潭医院', '市武昌医院', '市第四医院', '市中心医院', '市第三医院', '同济', '协和', '省人民医院', '火神山医院', '市第一医院', '其他'];
+    let staticField = 'hospitalName';
+    return {
+        totalData: maskData,
+        staticData: [
+            {
+                name: '所有',
+                type: 'all',
+                data: staticMaskCommon(maskDataTotal, maskData, staticArray, staticField)
+            },
+            {
+                name: '医用',
+                type: 'doctor',
+                data: staticMaskCommon(maskDoctorDataTotal, maskDoctorData, staticArray, staticField)
+            },
+            {
+                name: 'N95',
+                type: 'N95',
+                data: staticMaskCommon(maskN95DataTotal, maskN95Data, staticArray, staticField)
+            },
+        ]
+    }
+}
+
+$.get('./hospital.json', function (data) {
+    var newData = data.filter(item => item['开放床位'] > 500)
+    $('#hospitalBedTableSuit')
+        .bootstrapTable({
+            data: newData,
+            pageNumber: 1, //初始化加载第一页
+            pagination: false,//是否分页
+            sidePagination: 'client',//server:服务器端分页|client：前端分页
+        })
+})
+
 
 $.when(
     $.get('./0130.json'),
@@ -199,8 +314,12 @@ $.when(
 
             var mask = initMaskDataAnalysis(data);
             initData(mask, 'mask')
+            var maskHospital = initHospitalDataAnalysis(initHospitalData(mask.totalData))
+            initData(maskHospital, 'hospitalMask')
             var suit = initSuitDataAnalysis(data);
             initData(suit, 'suit')
+            var suitHospital = initHospitalDataAnalysis(initHospitalData(suit.totalData))
+            initData(suitHospital, 'hospitalSuit')
 
             //初始化图表
         })

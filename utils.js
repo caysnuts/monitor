@@ -224,102 +224,28 @@ const reducer = (accumulator, currentValue) => {
     return (parseInt(accumulator) || 0) + (parseInt(currentValue) || 0);
 }
 
-function staticMask(maskDataTotal, maskData) {
-    //医院
-    var maskDataTotalToHospital = 0;
-    try {
-        maskDataTotalToHospital = maskData.filter(item => item['接收单位类型'] == '医院')
-            .map(item => item['估算量'])
-            .reduce(reducer);
-    } catch (e) {
-
-    }
-    //指挥部
-    var maskDoctorDataTotalToCommand = 0;
-    try {
-        maskDoctorDataTotalToCommand = maskData.filter(item => item['接收单位类型'] == '指挥部')
-            .map(item => item['估算量'])
-            .reduce(reducer);
-    } catch (e) {
-
-    }
-    //社区
-    var maskDoctorDataTotalToCommunity = 0;
-    try {
-        maskDoctorDataTotalToCommunity = maskData.filter(item => item['接收单位类型'] == '社区')
-            .map(item => item['估算量'])
-            .reduce(reducer);
-    } catch (e) {
-
-    }
-    //卫健局
-    var maskDoctorDataTotalToHealth = 0;
-    try {
-        maskDoctorDataTotalToHealth = maskData.filter(item => item['接收单位类型'] == '卫健局')
-            .map(item => item['估算量'])
-            .reduce(reducer);
-    } catch (e) {
-
-    }
-    //方舱
-    var maskDoctorDataTotalToFangcang = 0;
-    try {
-        maskDoctorDataTotalToFangcang = maskData.filter(item => item['接收单位类型'] == '方舱')
-            .map(item => item['估算量'])
-            .reduce(reducer);
-    } catch (e) {
-
-    }
-    //公司
-    var maskDoctorDataTotalToCompany = 0;
-    try {
-        maskDoctorDataTotalToCompany = maskData.filter(item => item['接收单位类型'] == '公司')
-            .map(item => item['估算量'])
-            .reduce(reducer);
-    } catch (e) {
-
-    }
+function staticMaskCommon(maskDataTotal, maskData, staticArray,staticField) {
+    var staticResult = staticArray.map(arrayItem => {
+        var countTotal = 0;
+        try {
+            countTotal = maskData.filter(item => item[staticField] == arrayItem)
+                .map(item => item['估算量'])
+                .reduce(reducer);
+        } catch (e) {
+        }
+        return {
+            '类型': arrayItem,
+            '数量': toThousands(countTotal),
+            '占比': Number(countTotal * 100 / maskDataTotal)
+                .toFixed(2) + ' %'
+        }
+    })
     return [
         {
             '类型': '全部',
             '数量': toThousands(maskDataTotal),
             '占比': '100 %'
         },
-        {
-            '类型': '医院',
-            '数量': toThousands(maskDataTotalToHospital),
-            '占比': Number(maskDataTotalToHospital * 100 / maskDataTotal)
-                .toFixed(2) + ' %'
-        },
-        {
-            '类型': '指挥部',
-            '数量': toThousands(maskDoctorDataTotalToCommand),
-            '占比': Number(maskDoctorDataTotalToCommand * 100 / maskDataTotal)
-                .toFixed(2) + ' %'
-        },
-        {
-            '类型': '社区',
-            '数量': toThousands(maskDoctorDataTotalToCommunity),
-            '占比': Number(maskDoctorDataTotalToCommunity * 100 / maskDataTotal)
-                .toFixed(2) + ' %'
-        },
-        {
-            '类型': '卫健局',
-            '数量': toThousands(maskDoctorDataTotalToHealth),
-            '占比': Number(maskDoctorDataTotalToHealth * 100 / maskDataTotal)
-                .toFixed(2) + ' %'
-        },
-        {
-            '类型': '方舱',
-            '数量': toThousands(maskDoctorDataTotalToFangcang),
-            '占比': Number(maskDoctorDataTotalToFangcang * 100 / maskDataTotal)
-                .toFixed(2) + ' %'
-        },
-        {
-            '类型': '公司',
-            '数量': toThousands(maskDoctorDataTotalToCompany),
-            '占比': Number(maskDoctorDataTotalToCompany * 100 / maskDataTotal)
-                .toFixed(2) + ' %'
-        },
+        ...staticResult
     ]
 }
