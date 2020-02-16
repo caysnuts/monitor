@@ -250,6 +250,33 @@ function initHospitalDataAnalysis(data) {
     }
 }
 
+function initDistrictDataAnalysis(data) {
+    var maskData = data.filter(item => item['物资类型'] == '口罩')
+    var suitData = data.filter(item => item['物资类型'] == '防护服')
+    let staticArray = ['武汉市', '宜昌市', '襄阳市', '黄石市', '十堰市', '鄂州市', '荆州市', '荆门市', '黄冈市', '咸宁市', '孝感市', '随州市', '天门市','仙桃市','潜江市','神农架林区', '恩施土家族苗族自治州','-'];
+    let staticField = '地区';
+    return {
+        staticData: [
+            {
+                name: '所有物资',
+                type: 'all',
+                data: staticMaskCommon(getTotalCount(data), data, staticArray, staticField)
+            },
+            {
+                name: '口罩',
+                type: 'mask',
+                data: staticMaskCommon(getTotalCount(maskData), maskData, staticArray, staticField)
+            },
+            {
+                name: '防护服',
+                type: 'mask',
+                data: staticMaskCommon(getTotalCount(suitData), suitData, staticArray, staticField)
+            },
+
+        ]
+    }
+}
+
 $.get('./hospital.json', function (data) {
     var newData = data.filter(item => item['开放床位'] > 500)
     $('#hospitalBedTableSuit')
@@ -315,6 +342,9 @@ $.when(
         $(function () {
             initTotalDataAnalysis(data);
 
+            var district = initDistrictDataAnalysis(data);
+            console.log(district)
+            initData(district, 'district')
             var mask = initMaskDataAnalysis(data);
             initData(mask, 'mask')
             var maskHospital = initHospitalDataAnalysis(initHospitalData(mask.totalData))

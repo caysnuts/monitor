@@ -27,12 +27,70 @@ function getLocation(string) {
     }
     if (string.indexOf('武汉市') >= 0) {
         return '武汉市'
-    } else if (string.indexOf('武汉') >= 0) {
+    } else if (
+        string.indexOf('武汉') >= 0
+        || string.indexOf('江岸') >= 0
+        || string.indexOf('江汉') >= 0
+        || string.indexOf('硚口') >= 0
+        || string.indexOf('汉阳') >= 0
+        || string.indexOf('武昌') >= 0
+        || string.indexOf('青山') >= 0
+        || string.indexOf('洪山') >= 0
+        || string.indexOf('蔡甸') >= 0
+        || string.indexOf('江夏') >= 0
+        || string.indexOf('黄陂') >= 0
+        || string.indexOf('新洲') >= 0
+        || string.indexOf('东西湖') >= 0
+        || string.indexOf('汉南') >= 0
+        || string.indexOf('东湖高新') >= 0
+        || string.indexOf('东湖风景') >= 0
+    ) {
         return '武汉市'
-    } else if (string.indexOf('襄阳市') >= 0) {
+    } else if (
+        string.indexOf('同济') >= 0
+        || string.indexOf('武钢二医院') >= 0
+        || string.indexOf('中国人民解放军中部战区总医院') >= 0
+        || string.indexOf('协和医院') >= 0
+        || string.indexOf('672') >= 0
+        || string.indexOf('六七二') >= 0
+        || string.indexOf('湖北省高级人民法院') >= 0
+        || string.indexOf('湖北省中西医结合医院') >= 0
+        || string.indexOf('天佑医院') >= 0
+        || string.indexOf('湖北省') >= 0
+    ) {
+        return '武汉市'
+    } else if (string.indexOf('宜昌') >= 0) {
+        return '宜昌市'
+    } else if (string.indexOf('襄阳') >= 0) {
         return '襄阳市'
-    } else if (string.indexOf('黄冈市') >= 0) {
+    } else if (string.indexOf('黄石') >= 0) {
+        return '黄石市'
+    } else if (string.indexOf('十堰') >= 0) {
+        return '十堰市'
+    } else if (string.indexOf('鄂州') >= 0) {
+        return '鄂州市'
+    } else if (string.indexOf('荆州') >= 0) {
+        return '荆州市'
+    } else if (string.indexOf('荆门') >= 0) {
+        return '荆门市'
+    } else if (string.indexOf('黄冈') >= 0) {
         return '黄冈市'
+    } else if (string.indexOf('咸宁') >= 0) {
+        return '咸宁市'
+    } else if (string.indexOf('孝感') >= 0) {
+        return '孝感市'
+    } else if (string.indexOf('随州') >= 0) {
+        return '随州市'
+    } else if (string.indexOf('恩施土家族') >= 0) {
+        return '恩施土家族苗族自治州'
+    } else if (string.indexOf('天门') >= 0) {
+        return '天门市'
+    } else if (string.indexOf('仙桃') >= 0) {
+        return '仙桃市'
+    } else if (string.indexOf('潜江') >= 0) {
+        return '潜江市'
+    } else if (string.indexOf('神农架') >= 0) {
+        return '神农架林区'
     } else {
         return '-'
     }
@@ -224,7 +282,7 @@ const reducer = (accumulator, currentValue) => {
     return (parseInt(accumulator) || 0) + (parseInt(currentValue) || 0);
 }
 
-function staticMaskCommon(maskDataTotal, maskData, staticArray,staticField) {
+function staticMaskCommon(maskDataTotal, maskData, staticArray, staticField) {
     var staticResult = staticArray.map(arrayItem => {
         var countTotal = 0;
         try {
