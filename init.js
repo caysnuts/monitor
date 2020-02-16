@@ -168,7 +168,7 @@ function initHospitalData(data) {
                     ...item,
                     hospitalName: '市第四医院'
                 }
-            } else if (name.indexOf('中心医院') >= 0) {
+            } else if (name.indexOf('武汉市中心医院') >= 0) {
                 return {
                     ...item,
                     hospitalName: '市中心医院'
@@ -206,7 +206,7 @@ function initHospitalData(data) {
             } else {
                 return {
                     ...item,
-                    hospitalName: '其他'
+                    hospitalName: '全省其他'
                 }
             }
         })
@@ -226,7 +226,7 @@ function initHospitalDataAnalysis(data) {
     var maskN95DataTotal = getTotalCount(maskN95Data)
     //医用口罩总数
     var maskDoctorDataTotal = getTotalCount(maskDoctorData)
-    let staticArray = ['市金银潭医院', '市武昌医院', '市第四医院', '市中心医院', '市第三医院', '同济', '协和', '省人民医院', '火神山医院', '市第一医院', '其他'];
+    let staticArray = ['市金银潭医院', '市武昌医院', '市第四医院', '市中心医院', '市第三医院', '同济', '协和', '省人民医院', '火神山医院', '市第一医院', '全省其他'];
     let staticField = 'hospitalName';
     return {
         totalData: maskData,
