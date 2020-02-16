@@ -12,8 +12,11 @@ function initTotalDataAnalysis(data) {
 }
 
 function getTotalCount(data) {
-    return data.map(item => item['估算量'])
-        .reduce(reducer);
+    if (data && data.length > 0) {
+        return data.map(item => item['估算量'])
+            .reduce(reducer);
+    }
+    return 0
 }
 
 function initMaskDataAnalysis(data) {
@@ -160,22 +163,36 @@ $.when(
     $.get('./0213.json'),
     $.get('./0214.json'),
 )
-    .then(function (data_0130, data_0201, data_0202, data_0203, data_0204, data_0206, data_0207, data_0208, data_0209, data_0210, data_0211, data_0212, data_0213) {
+    .then(function (data_0130, data_0201, data_0202, data_0203, data_0204, data_0206, data_0207, data_0208, data_0209, data_0210, data_0211, data_0212, data_0213, data_0214) {
+        var data_0130_format = Format(data_0130[0], '1月30日');
+        var data_0201_format = Format(data_0201[0], '2月01日');
+        var data_0202_format = Format(data_0202[0], '2月02日');
+        var data_0203_format = Format(data_0203[0], '2月03日');
+        var data_0204_format = Format(data_0204[0], '2月04日');
+        var data_0206_format = Format(data_0206[0], '2月06日');
+        var data_0207_format = Format(data_0207[0], '2月07日');
+        var data_0208_format = Format(data_0208[0], '2月08日');
+        var data_0209_format = Format(data_0209[0], '2月09日');
+        var data_0210_format = Format(data_0210[0], '2月10日');
+        var data_0211_format = Format(data_0211[0], '2月11日');
+        var data_0212_format = Format(data_0212[0], '2月12日');
+        var data_0213_format = Format(data_0213[0], '2月13日');
+        var data_0214_format = Format(data_0214[0], '2月14日');
         var data = merge(
-            Format(data_0130[0], '1月30日'),
-            Format(data_0201[0], '2月01日'),
-            Format(data_0202[0], '2月02日'),
-            Format(data_0203[0], '2月03日'),
-            Format(data_0204[0], '2月04日'),
-            Format(data_0206[0], '2月06日'),
-            Format(data_0207[0], '2月07日'),
-            Format(data_0208[0], '2月08日'),
-            Format(data_0209[0], '2月09日'),
-            Format(data_0210[0], '2月10日'),
-            Format(data_0211[0], '2月11日'),
-            Format(data_0212[0], '2月12日'),
-            Format(data_0213[0], '2月13日'),
-            Format(data_0213[0], '2月14日')
+            data_0130_format,
+            data_0201_format,
+            data_0202_format,
+            data_0203_format,
+            data_0204_format,
+            data_0206_format,
+            data_0207_format,
+            data_0208_format,
+            data_0209_format,
+            data_0210_format,
+            data_0211_format,
+            data_0212_format,
+            data_0213_format,
+            data_0214_format,
         );
         $(function () {
             initTotalDataAnalysis(data);
@@ -184,5 +201,66 @@ $.when(
             initData(mask, 'mask')
             var suit = initSuitDataAnalysis(data);
             initData(suit, 'suit')
+
+            //初始化图表
         })
+
+        function chartDataInit(datafunc, index) {
+            var hospital_data = [];
+            var zhihui_data = [];
+            var social_data = [];
+            var weijianju_data = [];
+            var fangcang_data = [];
+            var company_data = [];
+
+            function getDaliyData(formatData, index) {
+                var static_data = datafunc(formatData).staticData[index].data;
+                static_data.map(item => {
+                    var count = parseInt(item['数量'].replace(',', ''));
+                    if (item['类型'] == '医院') {
+                        hospital_data.push(count);
+                    } else if (item['类型'] == '指挥部') {
+                        zhihui_data.push(count)
+                    } else if (item['类型'] == '社区') {
+                        social_data.push(count)
+                    } else if (item['类型'] == '卫健局') {
+                        weijianju_data.push(count)
+                    } else if (item['类型'] == '方舱') {
+                        fangcang_data.push(count)
+                    } else if (item['类型'] == '公司') {
+                        company_data.push(count)
+                    }
+                })
+            }
+
+            getDaliyData(data_0130_format, index);
+            getDaliyData(data_0201_format, index);
+            getDaliyData(data_0202_format, index);
+            getDaliyData(data_0203_format, index);
+            getDaliyData(data_0204_format, index);
+            getDaliyData(data_0206_format, index);
+            getDaliyData(data_0207_format, index);
+            getDaliyData(data_0208_format, index);
+            getDaliyData(data_0209_format, index);
+            getDaliyData(data_0210_format, index);
+            getDaliyData(data_0211_format, index);
+            getDaliyData(data_0212_format, index);
+            getDaliyData(data_0213_format, index);
+            getDaliyData(data_0214_format, index);
+            return {
+                '医院': hospital_data,
+                '指挥部': zhihui_data,
+                '社区': social_data,
+                '卫健局': weijianju_data,
+                '方舱': fangcang_data,
+                '公司': company_data,
+            }
+        }
+
+        initChart('maskMainChart', chartDataInit(initMaskDataAnalysis, 1))
+        initChart('maskMainChartN95', chartDataInit(initMaskDataAnalysis, 2))
+        initChart('maskMainChartDoctor', chartDataInit(initMaskDataAnalysis, 3))
+        initChart('suitMainChart', chartDataInit(initSuitDataAnalysis, 1))
+        initChart('suitMainChartDoctor', chartDataInit(initSuitDataAnalysis, 2))
+
     })

@@ -54,7 +54,7 @@
     </div>
     <div id="tabs-2">
         <section>
-            <h3>口罩 查询</h3>
+            <h3>口罩 明细查询</h3>
             <div>
                 <table id="maskTable">
                     <thead>
@@ -73,7 +73,7 @@
                     </thead>
                 </table>
             </div>
-            <h3>统计</h3>
+            <h3>总数量统计</h3>
             <div class="static">
                 <div>
                     <h5 id="maskStaticTitle0">-</h5>
@@ -124,11 +124,31 @@
                     </table>
                 </div>
             </div>
+            <h3>每日数据</h3>
+            <section>
+                <h4>所有</h4>
+                <div>
+                    <div id="maskMainChart" style="width: 900px;height:600px;"></div>
+                </div>
+            </section>
+            <section>
+                <h4>N95</h4>
+                <div>
+                    <div id="maskMainChartN95" style="width: 900px;height:600px;"></div>
+                </div>
+            </section>
+            <section>
+                <h4>医用</h4>
+                <div>
+                    <div id="maskMainChartDoctor" style="width: 900px;height:600px;"></div>
+                </div>
+            </section>
+
         </section>
     </div>
     <div id="tabs-3">
         <section>
-            <h3>防护服 查询</h3>
+            <h3>防护服 明细查询</h3>
             <div>
                 <table id="suitTable">
                     <thead>
@@ -147,7 +167,7 @@
                     </thead>
                 </table>
             </div>
-            <h3>统计</h3>
+            <h3>总数量统计</h3>
             <div class="static">
                 <div>
                     <h5 id="suitStaticTitle0">-</h5>
@@ -186,6 +206,19 @@
                     </table>
                 </div>
             </div>
+            <h3>每日数据</h3>
+            <section>
+                <h4>所有</h4>
+                <div>
+                    <div id="suitMainChart" style="width: 900px;height:600px;"></div>
+                </div>
+            </section>
+            <section>
+                <h4>医用</h4>
+                <div>
+                    <div id="suitMainChartDoctor" style="width: 900px;height:600px;"></div>
+                </div>
+            </section>
         </section>
     </div>
 </div>
@@ -201,8 +234,10 @@
         crossorigin="anonymous"></script>
 <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdn.bootcss.com/echarts/4.4.0-rc.1/echarts-en.common.js"></script>
 <script src="./utils.js"></script>
 <script src="./init.js"></script>
+<script src="./echartInit.js"></script>
 <script>
     $(function () {
         $('#tabs')
