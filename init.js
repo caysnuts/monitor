@@ -1,3 +1,41 @@
+var staticHospitalArray = [
+    '同济',
+    '市第一医院',
+    '火神山医院',
+    '协和',
+    '省人民医院',
+    '市金银潭医院',
+    '市第三医院',
+    '市第四医院',
+    '市中心医院',
+    '市武昌医院',
+    '市第六医院',
+    '雷神山医院',
+    '武汉亚心总院',
+    '市第五医院',
+    '黄陂区中医医院',
+    '市第九医院',
+    '省中西医结合医院',
+    '市汉口医院',
+    '市红十字会医院',
+    '蔡甸区妇幼保健院',
+    '天佑医院',
+    '省中医医院',
+    '市中医医院',
+    '672医院',
+    '市紫荆医院',
+    '解放军中部战区总医院',
+    '市第七医院',
+    '新洲区中医医院',
+    '市第八医院',
+    '儿童医院',
+    '江夏区中医医院',
+    '武钢二医院',
+    '省第三人民医院',
+    '市肺科医院',
+    '市优抚医院',
+    '市新城医院',
+    '全市其他'];
 function initTotalDataAnalysis(data) {
     $('#table')
         .bootstrapTable({
@@ -155,47 +193,8 @@ function initHospitalData(data) {
     if (data && data.length > 0) {
         return data.map(item => {
             let name = item['接收单位'];
-
-            let staticArray = [
-                '同济',
-                '市第一医院',
-                '火神山医院',
-                '协和',
-                '省人民医院',
-                '市金银潭医院',
-                '市第三医院',
-                '市第四医院',
-                '市中心医院',
-                '市武昌医院',
-                '市第六医院',
-                '雷神山医院',
-                '武汉亚心总院',
-                '市第五医院',
-                '黄陂区中医医院',
-                '市第九医院',
-                '省中西医结合医院',
-                '市汉口医院',
-                '市红十字会医院',
-                '蔡甸区妇幼保健院',
-                '天佑医院',
-                '省中医医院',
-                '市中医医院',
-                '672医院',
-                '市紫荆医院',
-                '解放军中部战区总医院',
-                '市第七医院',
-                '新洲区中医医院',
-                '市第八医院',
-                '儿童医院',
-                '江夏区中医医院',
-                '武钢二医院',
-                '省第三人民医院',
-                '市肺科医院',
-                '市优抚医院',
-                '市新城医院',
-                '全市其他'];
             var hospitalNameFinal = '全市其他';
-            staticArray.map(hospitalName => {
+            staticHospitalArray.map(hospitalName => {
                 if (name.indexOf(hospitalName) >= 0) {
                     hospitalNameFinal = hospitalName
                 } else if (name.indexOf(
@@ -206,8 +205,16 @@ function initHospitalData(data) {
                             .replace('武汉', '')
                     ) >= 0) {
                     hospitalNameFinal = hospitalName
+                    if ( hospitalNameFinal == '市中医医院' &&name.indexOf("市中医医院") >= 0) {
+                        hospitalNameFinal = '市中医医院'
+                    }else if ( hospitalNameFinal == '市中医医院' &&name.indexOf("省中医医院") >= 0) {
+                        hospitalNameFinal = '省中医医院'
+                    }else{
+                        hospitalNameFinal = '其他中医医院'
+                    }
                 }
             })
+
             return {
                 ...item,
                 hospitalName: hospitalNameFinal
@@ -229,62 +236,25 @@ function initHospitalDataAnalysis(data) {
     var maskN95DataTotal = getTotalCount(maskN95Data)
     //医用口罩总数
     var maskDoctorDataTotal = getTotalCount(maskDoctorData)
-    let staticArray = [
-        '同济',
-        '市第一医院',
-        '火神山医院',
-        '协和',
-        '省人民医院',
-        '市金银潭医院',
-        '市第三医院',
-        '市第四医院',
-        '市中心医院',
-        '市武昌医院',
-        '市第六医院',
-        '雷神山医院',
-        '武汉亚心总院',
-        '市第五医院',
-        '黄陂区中医医院',
-        '市第九医院',
-        '省中西医结合医院',
-        '市汉口医院',
-        '市红十字会医院',
-        '蔡甸区妇幼保健院',
-        '天佑医院',
-        '省中医医院',
-        '市中医医院',
-        '672医院',
-        '市紫荆医院',
-        '解放军中部战区总医院',
-        '市第七医院',
-        '新洲区中医医院',
-        '市第八医院',
-        '儿童医院',
-        '江夏区中医医院',
-        '武钢二医院',
-        '省第三人民医院',
-        '市肺科医院',
-        '市优抚医院',
-        '市新城医院',
-        '全市其他'];
     let staticField = 'hospitalName';
+    let staticHospitalArrayFinal = [...staticHospitalArray,'其他中医医院']
     return {
         totalData: maskData,
         staticData: [
             {
                 name: '所有',
                 type: 'all',
-                data: staticMaskCommon(maskDataTotal, maskData, staticArray, staticField)
+                data: staticMaskCommon(maskDataTotal, maskData, staticHospitalArrayFinal, staticField)
             },
             {
                 name: '医用',
                 type: 'doctor',
-                data: staticMaskCommon(maskDoctorDataTotal, maskDoctorData, staticArray, staticField)
+                data: staticMaskCommon(maskDoctorDataTotal, maskDoctorData, staticHospitalArrayFinal, staticField)
             },
             {
                 name: 'N95',
                 type: 'N95',
-                data: staticMaskCommon(maskN95DataTotal, maskN95Data, staticArray, staticField)
+                data: staticMaskCommon(maskN95DataTotal, maskN95Data, staticHospitalArrayFinal, staticField)
             },
         ]
     }
