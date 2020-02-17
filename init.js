@@ -37,6 +37,22 @@ var staticHospitalArray = [
     '市新城医院',
     '其他非定点医院'];
 
+var staticDistrictArray = [
+    '江岸',
+    '江汉',
+    '硚口',
+    '汉阳',
+    '武昌',
+    '青山',
+    '蔡甸',
+    '江夏',
+    '黄陂',
+    '新洲',
+    '东西湖',
+    '汉南',
+    '东湖高新',
+    '东湖风景',
+]
 function initTotalDataAnalysis(data) {
     $('#table')
         .bootstrapTable({
@@ -276,8 +292,8 @@ function initHospitalDataAnalysis(data) {
 function initDistrictDataAnalysis(data) {
     var maskData = data.filter(item => item['物资类型'] == '口罩')
     var suitData = data.filter(item => item['物资类型'] == '防护服')
-    let staticArray = ['武汉市', '宜昌市', '襄阳市', '黄石市', '十堰市', '鄂州市', '荆州市', '荆门市', '黄冈市', '咸宁市', '孝感市', '随州市', '天门市', '仙桃市', '潜江市', '神农架林区', '恩施土家族苗族自治州', '-'];
-    let staticField = '地区';
+    let staticArray = [...staticDistrictArray,'-'];
+    let staticField = '区';
     return {
         staticData: [
             {
@@ -366,8 +382,7 @@ $.when(
         );
         $(function () {
             initTotalDataAnalysis(data);
-
-            var district = initDistrictDataAnalysis(data);
+            var district = initDistrictDataAnalysis(data.filter(item=> item['接收单位类型'] != '医院'));
             initData(district, 'district')
             var mask = initMaskDataAnalysis(data);
             initData(mask, 'mask')
@@ -375,8 +390,8 @@ $.when(
             var suit = initSuitDataAnalysis(data);
             initData(suit, 'suit')
 
-            var maskHospitalData = mask.totalData.filter(item => item['接收单位类型'] == '医院' && item['地区'] == '武汉市')
-            var suitHospitalData = suit.totalData.filter(item => item['接收单位类型'] == '医院' && item['地区'] == '武汉市')
+            var maskHospitalData = mask.totalData.filter(item => item['接收单位类型'] == '医院' && item['市'] == '武汉市')
+            var suitHospitalData = suit.totalData.filter(item => item['接收单位类型'] == '医院' && item['市'] == '武汉市')
             var suitHospital = initHospitalDataAnalysis(initHospitalData(suitHospitalData))
             initData(suitHospital, 'hospitalSuit')
             var maskHospital = initHospitalDataAnalysis(initHospitalData(maskHospitalData))

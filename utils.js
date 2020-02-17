@@ -95,6 +95,44 @@ function getLocation(string) {
         return '-'
     }
 }
+function getDistrict(string) {
+    if (!string) {
+        return ''
+    }
+    if (string.indexOf('江岸') >= 0) {
+        return '江岸'
+    } else if (string.indexOf('江汉') >= 0) {
+        return '江汉'
+    } else if (string.indexOf('硚口') >= 0) {
+        return '硚口'
+    } else if (string.indexOf('汉阳') >= 0) {
+        return '汉阳'
+    } else if (string.indexOf('武昌') >= 0) {
+        return '武昌'
+    } else if (string.indexOf('青山') >= 0) {
+        return '青山'
+    } else if (string.indexOf('洪山') >= 0) {
+        return '洪山'
+    } else if (string.indexOf('蔡甸') >= 0) {
+        return '蔡甸'
+    } else if (string.indexOf('江夏') >= 0) {
+        return '江夏'
+    }  else if (string.indexOf('黄陂') >= 0) {
+        return '黄陂'
+    }  else if (string.indexOf('新洲') >= 0) {
+        return '新洲'
+    }  else if (string.indexOf('东西湖') >= 0) {
+        return '东西湖'
+    }  else if (string.indexOf('汉南') >= 0) {
+        return '汉南'
+    }  else if (string.indexOf('东湖高新') >= 0) {
+        return '东湖高新'
+    }  else if (string.indexOf('东湖风景') >= 0) {
+        return '东湖风景'
+    }else {
+        return '-'
+    }
+}
 
 function getCompanyType(string) {
     if (!string) {
@@ -266,7 +304,8 @@ function Format(data, date) {
             ...data[i],
             '时间': date,
             '估算量': caculateNumber(data[i]),
-            '地区': getLocation(data[i]['接收单位']),
+            '市': getLocation(data[i]['接收单位']),
+            '区': getDistrict(data[i]['接收单位']),
             '接收单位类型': getCompanyType(data[i]['接收单位']),
             '物资类型': getProductType(data[i]['品名']),
             '二级分类': getMaskProductType(data[i]),
