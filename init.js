@@ -382,7 +382,7 @@ $.when(
         );
         $(function () {
             initTotalDataAnalysis(data);
-            var district = initDistrictDataAnalysis(data.filter(item=> item['接收单位类型'] != '医院'));
+            var district = initDistrictDataAnalysis(data.filter(item=> item['市'] == '武汉市' && item['接收单位类型'] != '医院'));
             initData(district, 'district')
             var mask = initMaskDataAnalysis(data);
             initData(mask, 'mask')
