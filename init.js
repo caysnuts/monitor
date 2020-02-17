@@ -214,6 +214,14 @@ function initHospitalData(data) {
                         hospitalNameFinal = '省中医医院'
                     } else if (hospitalNameFinal == '市中医医院' && name.indexOf('省中医医院') >= 0) {
                         hospitalNameFinal = '省中医医院'
+                    } else if (hospitalNameFinal == '市中医医院' && name.indexOf('黄陂区中医院') >= 0) {
+                        hospitalNameFinal = '黄陂区中医医院'
+                    } else if (hospitalNameFinal == '市中医医院' && name.indexOf('新洲区中医院') >= 0) {
+                        hospitalNameFinal = '新洲区中医医院'
+                    } else if (hospitalNameFinal == '市中医医院' && name.indexOf('江夏区中医院') >= 0) {
+                        hospitalNameFinal = '江夏区中医医院'
+                    } else if (hospitalNameFinal == '市中医医院' && name.indexOf('汉南区中医院') >= 0) {
+                        hospitalNameFinal = '汉南区中医医院'
                     } else if (hospitalNameFinal == '市中医医院' && name.indexOf('中医') >= 0) {
                         hospitalNameFinal = '其他中医医院'
                     }
