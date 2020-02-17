@@ -208,6 +208,10 @@ function initHospitalData(data) {
                     hospitalNameFinal = hospitalName
                     if (hospitalNameFinal == '市中医医院' && name.indexOf('市中医医院') >= 0) {
                         hospitalNameFinal = '市中医医院'
+                    } else if (hospitalNameFinal == '市中医医院' && name.indexOf('市中医院') >= 0) {
+                        hospitalNameFinal = '市中医医院'
+                    } else if (hospitalNameFinal == '市中医医院' && name.indexOf('省中医院') >= 0) {
+                        hospitalNameFinal = '省中医医院'
                     } else if (hospitalNameFinal == '市中医医院' && name.indexOf('省中医医院') >= 0) {
                         hospitalNameFinal = '省中医医院'
                     } else if (hospitalNameFinal == '市中医医院' && name.indexOf('中医') >= 0) {
