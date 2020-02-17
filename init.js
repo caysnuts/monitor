@@ -138,10 +138,12 @@ function initData(data, domId) {
             pageList: [20, 40, 60, 100],//可选择单页记录数
         })
     for (var i = 0; i < data.staticData.length; i++) {
-        $(`#${domId}StaticTitle${i}`)[0].innerText = data.staticData[i].name;
+        $(`#${domId}StaticTitle${i}`)[0] && ($(`#${domId}StaticTitle${i}`)[0].innerText = data.staticData[i].name)
         $(`#${domId}StaticTable${i}`)
             .bootstrapTable({
-                data: data.staticData[i].data,
+                data: data.staticData[i].data.sort((a, b) => {
+                    return parseInt(b['占比'].replace('%', '')) - parseInt(a['占比'].replace('%', ''))
+                }),
                 pageNumber: 1, //初始化加载第一页
                 pagination: false,//是否分页
                 sidePagination: 'client',//server:服务器端分页|client：前端分页
@@ -153,61 +155,62 @@ function initHospitalData(data) {
     if (data && data.length > 0) {
         return data.map(item => {
             let name = item['接收单位'];
-            if (name.indexOf('金银潭') >= 0) {
-                return {
-                    ...item,
-                    hospitalName: '市金银潭医院'
+
+            let staticArray = [
+                '同济',
+                '市第一医院',
+                '火神山医院',
+                '协和',
+                '省人民医院',
+                '市金银潭医院',
+                '市第三医院',
+                '市第四医院',
+                '市中心医院',
+                '市武昌医院',
+                '市第六医院',
+                '雷神山医院',
+                '武汉亚心总院',
+                '市第五医院',
+                '黄陂区中医医院',
+                '市第九医院',
+                '省中西医结合医院',
+                '市汉口医院',
+                '市红十字会医院',
+                '蔡甸区妇幼保健院',
+                '天佑医院',
+                '省中医医院',
+                '市中医医院',
+                '672医院',
+                '市紫荆医院',
+                '解放军中部战区总医院',
+                '市第七医院',
+                '新洲区中医医院',
+                '市第八医院',
+                '儿童医院',
+                '江夏区中医医院',
+                '武钢二医院',
+                '省第三人民医院',
+                '市肺科医院',
+                '市优抚医院',
+                '市新城医院',
+                '全市其他'];
+            var hospitalNameFinal = '全市其他';
+            staticArray.map(hospitalName => {
+                if (name.indexOf(hospitalName) >= 0) {
+                    hospitalNameFinal = hospitalName
+                } else if (name.indexOf(
+                        hospitalName
+                            .replace('市', '')
+                            .replace('医院', '')
+                            .replace('总院', '')
+                            .replace('武汉', '')
+                    ) >= 0) {
+                    hospitalNameFinal = hospitalName
                 }
-            } else if (name.indexOf('武昌') >= 0) {
-                return {
-                    ...item,
-                    hospitalName: '市武昌医院'
-                }
-            } else if (name.indexOf('四医院') >= 0) {
-                return {
-                    ...item,
-                    hospitalName: '市第四医院'
-                }
-            } else if (name.indexOf('武汉市中心医院') >= 0) {
-                return {
-                    ...item,
-                    hospitalName: '市中心医院'
-                }
-            } else if (name.indexOf('三医院') >= 0) {
-                return {
-                    ...item,
-                    hospitalName: '市第三医院'
-                }
-            } else if (name.indexOf('同济') >= 0) {
-                return {
-                    ...item,
-                    hospitalName: '同济'
-                }
-            } else if (name.indexOf('协和') >= 0) {
-                return {
-                    ...item,
-                    hospitalName: '协和'
-                }
-            } else if (name.indexOf('省人民医院') >= 0) {
-                return {
-                    ...item,
-                    hospitalName: '省人民医院'
-                }
-            } else if (name.indexOf('火神山') >= 0) {
-                return {
-                    ...item,
-                    hospitalName: '火神山医院'
-                }
-            } else if (name.indexOf('一医院') >= 0) {
-                return {
-                    ...item,
-                    hospitalName: '市第一医院'
-                }
-            } else {
-                return {
-                    ...item,
-                    hospitalName: '全省其他'
-                }
+            })
+            return {
+                ...item,
+                hospitalName: hospitalNameFinal
             }
         })
     }
@@ -226,7 +229,44 @@ function initHospitalDataAnalysis(data) {
     var maskN95DataTotal = getTotalCount(maskN95Data)
     //医用口罩总数
     var maskDoctorDataTotal = getTotalCount(maskDoctorData)
-    let staticArray = ['市金银潭医院', '市武昌医院', '市第四医院', '市中心医院', '市第三医院', '同济', '协和', '省人民医院', '火神山医院', '市第一医院', '全省其他'];
+    let staticArray = [
+        '同济',
+        '市第一医院',
+        '火神山医院',
+        '协和',
+        '省人民医院',
+        '市金银潭医院',
+        '市第三医院',
+        '市第四医院',
+        '市中心医院',
+        '市武昌医院',
+        '市第六医院',
+        '雷神山医院',
+        '武汉亚心总院',
+        '市第五医院',
+        '黄陂区中医医院',
+        '市第九医院',
+        '省中西医结合医院',
+        '市汉口医院',
+        '市红十字会医院',
+        '蔡甸区妇幼保健院',
+        '天佑医院',
+        '省中医医院',
+        '市中医医院',
+        '672医院',
+        '市紫荆医院',
+        '解放军中部战区总医院',
+        '市第七医院',
+        '新洲区中医医院',
+        '市第八医院',
+        '儿童医院',
+        '江夏区中医医院',
+        '武钢二医院',
+        '省第三人民医院',
+        '市肺科医院',
+        '市优抚医院',
+        '市新城医院',
+        '全市其他'];
     let staticField = 'hospitalName';
     return {
         totalData: maskData,
@@ -253,7 +293,7 @@ function initHospitalDataAnalysis(data) {
 function initDistrictDataAnalysis(data) {
     var maskData = data.filter(item => item['物资类型'] == '口罩')
     var suitData = data.filter(item => item['物资类型'] == '防护服')
-    let staticArray = ['武汉市', '宜昌市', '襄阳市', '黄石市', '十堰市', '鄂州市', '荆州市', '荆门市', '黄冈市', '咸宁市', '孝感市', '随州市', '天门市','仙桃市','潜江市','神农架林区', '恩施土家族苗族自治州','-'];
+    let staticArray = ['武汉市', '宜昌市', '襄阳市', '黄石市', '十堰市', '鄂州市', '荆州市', '荆门市', '黄冈市', '咸宁市', '孝感市', '随州市', '天门市', '仙桃市', '潜江市', '神农架林区', '恩施土家族苗族自治州', '-'];
     let staticField = '地区';
     return {
         staticData: [
@@ -278,7 +318,9 @@ function initDistrictDataAnalysis(data) {
 }
 
 $.get('./hospital.json', function (data) {
-    var newData = data.filter(item => item['开放床位'] > 500)
+    var newData = data.sort((a, b) => {
+        return parseInt(b['开放床位']) - parseInt(a['开放床位'])
+    })
     $('#hospitalBedTableSuit')
         .bootstrapTable({
             data: newData,
@@ -343,18 +385,30 @@ $.when(
             initTotalDataAnalysis(data);
 
             var district = initDistrictDataAnalysis(data);
-            console.log(district)
             initData(district, 'district')
             var mask = initMaskDataAnalysis(data);
             initData(mask, 'mask')
-            var maskHospital = initHospitalDataAnalysis(initHospitalData(mask.totalData))
-            initData(maskHospital, 'hospitalMask')
+
             var suit = initSuitDataAnalysis(data);
             initData(suit, 'suit')
-            var suitHospital = initHospitalDataAnalysis(initHospitalData(suit.totalData))
-            initData(suitHospital, 'hospitalSuit')
 
-            //初始化图表
+            var maskHospitalData = mask.totalData.filter(item => item['接收单位类型'] == '医院' && item['地区'] == '武汉市')
+            var suitHospitalData = suit.totalData.filter(item => item['接收单位类型'] == '医院' && item['地区'] == '武汉市')
+            var suitHospital = initHospitalDataAnalysis(initHospitalData(suitHospitalData))
+            initData(suitHospital, 'hospitalSuit')
+            var maskHospital = initHospitalDataAnalysis(initHospitalData(maskHospitalData))
+            initData(maskHospital, 'hospitalMask')
+
+            $('#hospitalTable')
+                .bootstrapTable({
+                    data: merge(maskHospitalData, suitHospitalData),
+                    search: true,
+                    pageNumber: 1, //初始化加载第一页
+                    pagination: true,//是否分页
+                    sidePagination: 'client',//server:服务器端分页|client：前端分页
+                    pageSize: 10,//单页记录数
+                    pageList: [20, 40, 60, 100],//可选择单页记录数
+                })
         })
 
         function chartDataInit(datafunc, index) {
