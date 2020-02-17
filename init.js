@@ -35,7 +35,8 @@ var staticHospitalArray = [
     '市肺科医院',
     '市优抚医院',
     '市新城医院',
-    '全市其他'];
+    '其他非定点医院'];
+
 function initTotalDataAnalysis(data) {
     $('#table')
         .bootstrapTable({
@@ -193,23 +194,23 @@ function initHospitalData(data) {
     if (data && data.length > 0) {
         return data.map(item => {
             let name = item['接收单位'];
-            var hospitalNameFinal = '全市其他';
+            var hospitalNameFinal = '其他非定点医院';
             staticHospitalArray.map(hospitalName => {
                 if (name.indexOf(hospitalName) >= 0) {
                     hospitalNameFinal = hospitalName
                 } else if (name.indexOf(
-                        hospitalName
-                            .replace('市', '')
-                            .replace('医院', '')
-                            .replace('总院', '')
-                            .replace('武汉', '')
-                    ) >= 0) {
+                    hospitalName
+                        .replace('市', '')
+                        .replace('医院', '')
+                        .replace('总院', '')
+                        .replace('武汉', '')
+                ) >= 0) {
                     hospitalNameFinal = hospitalName
-                    if ( hospitalNameFinal == '市中医医院' &&name.indexOf("市中医医院") >= 0) {
+                    if (hospitalNameFinal == '市中医医院' && name.indexOf('市中医医院') >= 0) {
                         hospitalNameFinal = '市中医医院'
-                    }else if ( hospitalNameFinal == '市中医医院' &&name.indexOf("省中医医院") >= 0) {
+                    } else if (hospitalNameFinal == '市中医医院' && name.indexOf('省中医医院') >= 0) {
                         hospitalNameFinal = '省中医医院'
-                    }else{
+                    } else if (hospitalNameFinal == '市中医医院' && name.indexOf('中医') >= 0) {
                         hospitalNameFinal = '其他中医医院'
                     }
                 }
@@ -237,7 +238,7 @@ function initHospitalDataAnalysis(data) {
     //医用口罩总数
     var maskDoctorDataTotal = getTotalCount(maskDoctorData)
     let staticField = 'hospitalName';
-    let staticHospitalArrayFinal = [...staticHospitalArray,'其他中医医院']
+    let staticHospitalArrayFinal = [...staticHospitalArray, '其他中医医院']
     return {
         totalData: maskData,
         staticData: [
