@@ -228,6 +228,111 @@ function initGlovesDataAnalysis(data) {
         ]
     }
 }
+function initGoggleDataAnalysis(data) {
+    //手套数据
+    var goggleData = data.filter(item => item['物资类型'] == '护目镜');
+    //手套总数
+    var goggleDataTotal = getTotalCount(goggleData)
+    var goggleStaticData = [
+        {
+            '类型': '全部',
+            '数量': goggleDataTotal,
+            '占比': '100 %'
+        },
+        {
+            '类型': '医用',
+            '数量': goggleDataTotal,
+            '占比': Number(goggleDataTotal * 100 / goggleDataTotal)
+                .toFixed(2) + ' %'
+        },
+    ]
+
+    return {
+        totalData: goggleData,
+        staticData: [
+            {
+                name: '分类统计',
+                type: 'sortByType',
+                data: goggleStaticData
+            },
+            {
+                name: '所有',
+                type: 'all',
+                data: staticMaskCommon(goggleDataTotal, goggleData, staticCompanyArray, '接收单位类型')
+            },
+        ]
+    }
+}
+function initPurifierDataAnalysis(data) {
+    //手套数据
+    var goggleData = data.filter(item => item['物资类型'] == '空气净化器');
+    //手套总数
+    var goggleDataTotal = getTotalCount(goggleData)
+    var goggleStaticData = [
+        {
+            '类型': '全部',
+            '数量': goggleDataTotal,
+            '占比': '100 %'
+        },
+        {
+            '类型': '医用',
+            '数量': goggleDataTotal,
+            '占比': Number(goggleDataTotal * 100 / goggleDataTotal)
+                .toFixed(2) + ' %'
+        },
+    ]
+
+    return {
+        totalData: goggleData,
+        staticData: [
+            {
+                name: '分类统计',
+                type: 'sortByType',
+                data: goggleStaticData
+            },
+            {
+                name: '所有',
+                type: 'all',
+                data: staticMaskCommon(goggleDataTotal, goggleData, staticCompanyArray, '接收单位类型')
+            },
+        ]
+    }
+}
+function initDisinfectantDataAnalysis(data) {
+    //手套数据
+    var goggleData = data.filter(item => item['物资类型'] == '消毒液');
+    //手套总数
+    var goggleDataTotal = getTotalCount(goggleData)
+    var goggleStaticData = [
+        {
+            '类型': '全部',
+            '数量': goggleDataTotal,
+            '占比': '100 %'
+        },
+        {
+            '类型': '医用',
+            '数量': goggleDataTotal,
+            '占比': Number(goggleDataTotal * 100 / goggleDataTotal)
+                .toFixed(2) + ' %'
+        },
+    ]
+
+    return {
+        totalData: goggleData,
+        staticData: [
+            {
+                name: '分类统计',
+                type: 'sortByType',
+                data: goggleStaticData
+            },
+            {
+                name: '所有',
+                type: 'all',
+                data: staticMaskCommon(goggleDataTotal, goggleData, staticCompanyArray, '接收单位类型')
+            },
+        ]
+    }
+}
 
 function initData(data, domId) {
     $(`#${domId}Table`)
@@ -460,6 +565,15 @@ $.when(
             var gloves = initGlovesDataAnalysis(data);
             initData(gloves, 'gloves')
 
+            var goggle = initGoggleDataAnalysis(data);
+            initData(goggle, 'goggle')
+
+            var purifier = initPurifierDataAnalysis(data);
+            initData(purifier, 'purifier')
+
+            var disinfectant = initDisinfectantDataAnalysis(data);
+            initData(disinfectant, 'disinfectant')
+
             var maskHospitalData = mask.totalData.filter(item => item['接收单位类型'] == '医院' && item['市'] == '武汉市')
             var suitHospitalData = suit.totalData.filter(item => item['接收单位类型'] == '医院' && item['市'] == '武汉市')
             var suitHospital = initHospitalDataAnalysis(initHospitalData(suitHospitalData))
@@ -539,5 +653,8 @@ $.when(
         initChart('suitMainChartDoctor', chartDataInit(initSuitDataAnalysis, 2))
         initChart('glovesMainChart', chartDataInit(initGlovesDataAnalysis, 1))
         initChart('glovesMainChartDoctor', chartDataInit(initGlovesDataAnalysis, 2))
+        initChart('goggleMainChart', chartDataInit(initGoggleDataAnalysis, 1))
+        initChart('purifierMainChart', chartDataInit(initPurifierDataAnalysis, 1))
+        initChart('disinfectantMainChart', chartDataInit(initDisinfectantDataAnalysis, 1))
 
     })

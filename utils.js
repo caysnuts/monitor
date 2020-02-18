@@ -192,6 +192,9 @@ function calulateMutipdleNumber(string) {
     } else if (string.indexOf('*') > 0) {
         var tempArray = string.split('*')
         if (tempArray.length == 2) {
+            if(tempArray[0].indexOf('ml')){
+                return parseInt(tempArray[1]) || 1
+            }
             return parseInt(tempArray[0]) * parseInt(tempArray[1]) || 1
         } else {
             return 1
@@ -274,6 +277,10 @@ function getProductType(string) {
         return '手术服'
     } else if (string.indexOf('手套') >= 0) {
         return '手套'
+    } else if (string.indexOf('空气净化器') >= 0) {
+        return '空气净化器'
+    } else if (string.indexOf('消毒液') >= 0) {
+        return '消毒液'
     } else {
         return '-'
     }
