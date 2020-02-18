@@ -187,6 +187,9 @@ function initData(data, domId) {
         .bootstrapTable({
             data: data.totalData,
             search: true,
+            sortable: true,
+            sortName: '估算量',                    // 设置默认排序为 name
+            sortOrder: "desc",
             pageNumber: 1, //初始化加载第一页
             pagination: true,//是否分页
             sidePagination: 'client',//server:服务器端分页|client：前端分页
