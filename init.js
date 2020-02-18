@@ -184,6 +184,50 @@ function initSuitDataAnalysis(data) {
     }
 }
 
+function initGlovesDataAnalysis(data) {
+    //手套数据
+    var glovesData = data.filter(item => item['物资类型'] == '手套');
+    //医用手套数据
+    var glovesDoctorData = glovesData.filter(item => item['二级分类'] == '医用');
+    //手套总数
+    var glovesDataTotal = getTotalCount(glovesData)
+    //医用手套总数
+    var glovesDoctorDataTotal = getTotalCount(glovesDoctorData)
+    var glovesStaticData = [
+        {
+            '类型': '全部',
+            '数量': glovesDataTotal,
+            '占比': '100 %'
+        },
+        {
+            '类型': '医用',
+            '数量': glovesDoctorDataTotal,
+            '占比': Number(glovesDoctorDataTotal * 100 / glovesDataTotal)
+                .toFixed(2) + ' %'
+        },
+    ]
+
+    return {
+        totalData: glovesData,
+        staticData: [
+            {
+                name: '分类统计',
+                type: 'sortByType',
+                data: glovesStaticData
+            },
+            {
+                name: '所有',
+                type: 'all',
+                data: staticMaskCommon(glovesDataTotal, glovesData, staticCompanyArray, '接收单位类型')
+            },
+            {
+                name: '医用',
+                type: 'doctor',
+                data: staticMaskCommon(glovesDoctorDataTotal, glovesDoctorData, staticCompanyArray, '接收单位类型')
+            },
+        ]
+    }
+}
 
 function initData(data, domId) {
     $(`#${domId}Table`)
@@ -406,11 +450,15 @@ $.when(
             initTotalDataAnalysis(data);
             var district = initDistrictDataAnalysis(data.filter(item => item['市'] == '武汉市' && item['接收单位类型'] != '医院'));
             initData(district, 'district')
+
             var mask = initMaskDataAnalysis(data);
             initData(mask, 'mask')
 
             var suit = initSuitDataAnalysis(data);
             initData(suit, 'suit')
+
+            var gloves = initGlovesDataAnalysis(data);
+            initData(gloves, 'gloves')
 
             var maskHospitalData = mask.totalData.filter(item => item['接收单位类型'] == '医院' && item['市'] == '武汉市')
             var suitHospitalData = suit.totalData.filter(item => item['接收单位类型'] == '医院' && item['市'] == '武汉市')
@@ -442,7 +490,7 @@ $.when(
             function getDaliyData(formatData, index) {
                 var static_data = datafunc(formatData).staticData[index].data;
                 static_data.map(item => {
-                    var count = parseInt(item['数量'].replace(',', ''));
+                    var count = parseInt(item['数量'].replace(/,/g, ''));
                     if (item['类型'] == '医院') {
                         hospital_data.push(count);
                     } else if (item['类型'] == '指挥部') {
@@ -489,5 +537,7 @@ $.when(
         initChart('maskMainChartDoctor', chartDataInit(initMaskDataAnalysis, 3))
         initChart('suitMainChart', chartDataInit(initSuitDataAnalysis, 1))
         initChart('suitMainChartDoctor', chartDataInit(initSuitDataAnalysis, 2))
+        initChart('glovesMainChart', chartDataInit(initGlovesDataAnalysis, 1))
+        initChart('glovesMainChartDoctor', chartDataInit(initGlovesDataAnalysis, 2))
 
     })

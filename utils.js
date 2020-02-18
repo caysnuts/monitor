@@ -182,17 +182,17 @@ function calulateMutipdleNumber(string) {
         var tempArray = string.split('/')
         if (tempArray[0].indexOf(',') > 0) {
             let calArray = tempArray[0].split(',')
-            return parseInt(tempArray[0].split(',')[calArray.length - 1])
+            return parseInt(tempArray[0].split(',')[calArray.length - 1]) || 1
         }
         if (tempArray[0].indexOf('，') > 0) {
             let calArray = tempArray[0].split('，')
-            return parseInt(tempArray[0].split('，')[calArray.length - 1])
+            return parseInt(tempArray[0].split('，')[calArray.length - 1]) || 1
         }
         return parseInt(tempArray[0])
     } else if (string.indexOf('*') > 0) {
         var tempArray = string.split('*')
         if (tempArray.length == 2) {
-            return Number(tempArray[0]) * Number(tempArray[1])
+            return parseInt(tempArray[0]) * parseInt(tempArray[1]) || 1
         } else {
             return 1
         }
@@ -204,7 +204,7 @@ function calulateMutipdleNumber(string) {
         return 50
     } else if (parseInt(string) > 0) {
         if (Number(string) == string && Number(string) < 10000) {
-            return Number(string)
+            return Number(string) || 1
         } else {
             return 1
         }
