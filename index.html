@@ -32,6 +32,7 @@
         <li><a href="#tabs-7">护目镜</a></li>
         <li><a href="#tabs-8">空气净化器</a></li>
         <li><a href="#tabs-9">消毒液</a></li>
+        <li><a href="#tabs-10">鞋套</a></li>
         <li><a href="#tabs-4">定点医院</a></li>
         <li><a href="#tabs-5">说明</a></li>
     </ul>
@@ -515,6 +516,64 @@
                 <h4>所有</h4>
                 <div>
                     <div id="disinfectantMainChart" style="width: 900px;height:600px;"></div>
+                </div>
+            </section>
+        </section>
+    </div>
+    <div id="tabs-10">
+        <section>
+            <h3>鞋套 明细查询</h3>
+            <div>
+                <table id="shoeTable">
+                    <thead>
+                    <tr>
+                        <th data-field="接收单位">接收单位</th>
+                        <th data-field="品名">品名</th>
+                        <th data-field="规格">规格</th>
+                        <th data-field="计量单位">计量单位</th>
+                        <th data-field="数量">数量</th>
+                        <th data-field="时间">时间</th>
+                        <th data-field="估算量">估算量</th>
+                        <th data-field="市">市</th>
+                        <th data-field="区">区</th>
+                        <th data-field="接收单位类型">接收单位类型</th>
+                        <th data-field="二级分类">二级分类</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+            <h3>总数量统计</h3>
+            <div class="static">
+                <div>
+                    <h5 id="shoeStaticTitle0">-</h5>
+                    <table id="shoeStaticTable0" style="width: 200px">
+                        <thead>
+                        <tr>
+                            <th data-field="类型">类型</th>
+                            <th data-field="数量">数量</th>
+                            <th data-field="占比">占比</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div>
+                    <h5 id="shoeStaticTitle1">所有</h5>
+                    <table id="shoeStaticTable1" style="width: 300px">
+                        <thead>
+                        <tr>
+                            <th data-field="类型">类型</th>
+                            <th data-field="数量">数量</th>
+                            <th data-field="占比">占比</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <h3>每日数据</h3>
+            <section>
+                <h4>所有</h4>
+                <div>
+                    <div id="shoeMainChart" style="width: 900px;height:600px;"></div>
                 </div>
             </section>
         </section>

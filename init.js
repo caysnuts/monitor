@@ -333,6 +333,41 @@ function initDisinfectantDataAnalysis(data) {
         ]
     }
 }
+function initShoeDataAnalysis(data) {
+    //手套数据
+    var goggleData = data.filter(item => item['物资类型'] == '鞋套');
+    //手套总数
+    var goggleDataTotal = getTotalCount(goggleData)
+    var goggleStaticData = [
+        {
+            '类型': '全部',
+            '数量': goggleDataTotal,
+            '占比': '100 %'
+        },
+        {
+            '类型': '医用',
+            '数量': goggleDataTotal,
+            '占比': Number(goggleDataTotal * 100 / goggleDataTotal)
+                .toFixed(2) + ' %'
+        },
+    ]
+
+    return {
+        totalData: goggleData,
+        staticData: [
+            {
+                name: '分类统计',
+                type: 'sortByType',
+                data: goggleStaticData
+            },
+            {
+                name: '所有',
+                type: 'all',
+                data: staticMaskCommon(goggleDataTotal, goggleData, staticCompanyArray, '接收单位类型')
+            },
+        ]
+    }
+}
 
 function initData(data, domId) {
     $(`#${domId}Table`)
@@ -579,6 +614,9 @@ $.when(
             var disinfectant = initDisinfectantDataAnalysis(data);
             initData(disinfectant, 'disinfectant')
 
+            var shoe = initShoeDataAnalysis(data);
+            initData(shoe, 'shoe')
+
             var maskHospitalData = mask.totalData.filter(item => item['接收单位类型'] == '医院' && item['市'] == '武汉市')
             var suitHospitalData = suit.totalData.filter(item => item['接收单位类型'] == '医院' && item['市'] == '武汉市')
             var suitHospital = initHospitalDataAnalysis(initHospitalData(suitHospitalData))
@@ -662,5 +700,6 @@ $.when(
         initChart('goggleMainChart', chartDataInit(initGoggleDataAnalysis, 1))
         initChart('purifierMainChart', chartDataInit(initPurifierDataAnalysis, 1))
         initChart('disinfectantMainChart', chartDataInit(initDisinfectantDataAnalysis, 1))
+        initChart('shoeMainChart', chartDataInit(initShoeDataAnalysis, 1))
 
     })

@@ -281,6 +281,8 @@ function getProductType(string) {
         return '空气净化器'
     } else if (string.indexOf('消毒液') >= 0) {
         return '消毒液'
+    }  else if (string.indexOf('鞋套') >= 0) {
+        return '鞋套'
     } else {
         return '-'
     }
