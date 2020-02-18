@@ -1,3 +1,6 @@
+var  staticCompanyArray = ['医院', '指挥部', '社区', '卫健局', '方舱', '公司','疾控中心','共青团','东湖风景区管委会']
+
+
 var staticHospitalArray = [
     '同济',
     '市第一医院',
@@ -107,7 +110,7 @@ function initMaskDataAnalysis(data) {
                 .toFixed(2) + ' %'
         },
     ]
-    let staticArray = ['医院', '指挥部', '社区', '卫健局', '方舱', '公司'];
+    let staticArray = staticCompanyArray
     let staticField = '接收单位类型';
     return {
         totalData: maskData,
@@ -170,12 +173,12 @@ function initSuitDataAnalysis(data) {
             {
                 name: '所有',
                 type: 'all',
-                data: staticMaskCommon(suitDataTotal, suitData, ['医院', '指挥部', '社区', '卫健局', '方舱', '公司'], '接收单位类型')
+                data: staticMaskCommon(suitDataTotal, suitData, staticCompanyArray, '接收单位类型')
             },
             {
                 name: '医用',
                 type: 'doctor',
-                data: staticMaskCommon(suitDoctorDataTotal, suitDoctorData, ['医院', '指挥部', '社区', '卫健局', '方舱', '公司'], '接收单位类型')
+                data: staticMaskCommon(suitDoctorDataTotal, suitDoctorData, staticCompanyArray, '接收单位类型')
             },
         ]
     }

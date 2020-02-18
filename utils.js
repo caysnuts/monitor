@@ -95,6 +95,7 @@ function getLocation(string) {
         return '-'
     }
 }
+
 function getDistrict(string) {
     if (!string) {
         return ''
@@ -117,19 +118,19 @@ function getDistrict(string) {
         return '蔡甸'
     } else if (string.indexOf('江夏') >= 0) {
         return '江夏'
-    }  else if (string.indexOf('黄陂') >= 0) {
+    } else if (string.indexOf('黄陂') >= 0) {
         return '黄陂'
-    }  else if (string.indexOf('新洲') >= 0) {
+    } else if (string.indexOf('新洲') >= 0) {
         return '新洲'
-    }  else if (string.indexOf('东西湖') >= 0) {
+    } else if (string.indexOf('东西湖') >= 0) {
         return '东西湖'
-    }  else if (string.indexOf('汉南') >= 0) {
+    } else if (string.indexOf('汉南') >= 0) {
         return '汉南'
-    }  else if (string.indexOf('东湖高新') >= 0) {
+    } else if (string.indexOf('东湖高新') >= 0) {
         return '东湖高新'
-    }  else if (string.indexOf('东湖风景') >= 0) {
+    } else if (string.indexOf('东湖风景') >= 0) {
         return '东湖风景'
-    }else {
+    } else {
         return '-'
     }
 }
@@ -142,7 +143,9 @@ function getCompanyType(string) {
         return '方舱'
     } else if (string.indexOf('医院') >= 0) {
         return '医院'
-    } else if (string.indexOf('指挥部') >= 0) {
+    } else if (
+        string.indexOf('指挥部') >= 0
+    ) {
         return '指挥部'
     } else if (string.indexOf('社区') >= 0) {
         return '社区'
@@ -156,6 +159,16 @@ function getCompanyType(string) {
         return '公司'
     } else if (string.indexOf('共青团') >= 0) {
         return '共青团'
+    } else if (string.indexOf('东湖风景区管委会') >= 0) {
+        return '东湖风景区管委会'
+    } else if (
+        string.indexOf('武汉市江岸区') >= 0
+        || string.indexOf('武汉市江夏区') >= 0
+        || string.indexOf('武汉市蔡甸区') >= 0
+        || string.indexOf('武汉市江汉区') >= 0
+        || string.indexOf('东湖风景区管委会') >= 0
+    ) {
+        return '指挥部'
     } else {
         return '-'
     }
@@ -168,17 +181,19 @@ function calulateMutipdleNumber(string) {
     if (string.indexOf('/') > 0) {
         var tempArray = string.split('/')
         if (tempArray[0].indexOf(',') > 0) {
-            return parseInt(tempArray[0].split(',')[1])
+            let calArray = tempArray[0].split(',')
+            return parseInt(tempArray[0].split(',')[calArray.length - 1])
         }
         if (tempArray[0].indexOf('，') > 0) {
-            return parseInt(tempArray[0].split('，')[1])
+            let calArray = tempArray[0].split('，')
+            return parseInt(tempArray[0].split('，')[calArray.length - 1])
         }
         return parseInt(tempArray[0])
     } else if (string.indexOf('*') > 0) {
         var tempArray = string.split('*')
-        if(tempArray.length ==2){
+        if (tempArray.length == 2) {
             return Number(tempArray[0]) * Number(tempArray[1])
-        }else{
+        } else {
             return 1
         }
     } else if (string == 'EAR200P') {
@@ -187,13 +202,10 @@ function calulateMutipdleNumber(string) {
         return 2000
     } else if (string == '9105') {
         return 50
-    } else if ( parseInt(string) > 0) {
-        console.log('test',string)
-        if(Number(string) == string && Number(string) < 10000){
-            console.log('test',Number(string))
+    } else if (parseInt(string) > 0) {
+        if (Number(string) == string && Number(string) < 10000) {
             return Number(string)
-        }else{
-            console.log('test',1)
+        } else {
             return 1
         }
     } else {
@@ -311,6 +323,7 @@ function getMaskProductType(arrayItem) {
             || arrayItem['品名'].indexOf('BAOTHACH') >= 0
             || arrayItem['品名'].indexOf('SURGICAL') >= 0
             || arrayItem['品名'].indexOf('Pasture') >= 0
+            || arrayItem['品名'].indexOf('surgicalface') >= 0
         ) {
             return '医用'
         }
