@@ -176,13 +176,26 @@ function calulateMutipdleNumber(string) {
         return parseInt(tempArray[0])
     } else if (string.indexOf('*') > 0) {
         var tempArray = string.split('*')
-        return Number(tempArray[0]) * Number(tempArray[1])
+        if(tempArray.length ==2){
+            return Number(tempArray[0]) * Number(tempArray[1])
+        }else{
+            return 1
+        }
     } else if (string == 'EAR200P') {
         return 200
     } else if (string == '平面型耳带式') {
         return 2000
     } else if (string == '9105') {
         return 50
+    } else if ( parseInt(string) > 0) {
+        console.log('test',string)
+        if(Number(string) == string && Number(string) < 10000){
+            console.log('test',Number(string))
+            return Number(string)
+        }else{
+            console.log('test',1)
+            return 1
+        }
     } else {
         return 1
     }
@@ -263,6 +276,7 @@ function getMaskProductType(arrayItem) {
             || arrayItem['品名'].indexOf('kf94') >= 0
             || arrayItem['品名'].indexOf('FFP2') >= 0
             || arrayItem['品名'].indexOf('ffp2') >= 0
+            || arrayItem['品名'].indexOf('good job') >= 0
         ) {
             return 'N95'
         }
@@ -275,20 +289,28 @@ function getMaskProductType(arrayItem) {
             || arrayItem['规格'].indexOf('kf94') >= 0
             || arrayItem['规格'].indexOf('FFP2') >= 0
             || arrayItem['规格'].indexOf('ffp2') >= 0
+            || arrayItem['规格'].indexOf('good job') >= 0
         ) {
             return 'N95'
-        }
-    }
-    if (arrayItem['品名']) {
-        if (
-            arrayItem['品名'].indexOf('医用') >= 0
-        ) {
-            return '医用'
         }
     }
     if (arrayItem['规格']) {
         if (
             arrayItem['规格'].indexOf('医用') >= 0
+        ) {
+            return '医用'
+        }
+    }
+    if (arrayItem['品名']) {
+        if (
+            (
+                arrayItem['品名'].indexOf('医用') >= 0
+                && arrayItem['品名'].indexOf('非医用') < 0
+            )
+            || arrayItem['品名'].indexOf('SURGITEC') >= 0
+            || arrayItem['品名'].indexOf('BAOTHACH') >= 0
+            || arrayItem['品名'].indexOf('SURGICAL') >= 0
+            || arrayItem['品名'].indexOf('Pasture') >= 0
         ) {
             return '医用'
         }
