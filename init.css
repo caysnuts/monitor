@@ -42,3 +42,10 @@ section {
 #tabs-4 > h3{
     padding:30px 0 ;
 }
+
+.introduction{
+    padding:15px;
+}
+.introduction > div{
+   padding: 10px;
+}
