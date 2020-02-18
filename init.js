@@ -22,7 +22,7 @@ var staticHospitalArray = [
     '天佑医院',
     '省中医医院',
     '市中医医院',
-    '672医院',
+    '六七二医院',
     '市紫荆医院',
     '解放军中部战区总医院',
     '市第七医院',
@@ -53,6 +53,7 @@ var staticDistrictArray = [
     '东湖高新',
     '东湖风景',
 ]
+
 function initTotalDataAnalysis(data) {
     $('#table')
         .bootstrapTable({
@@ -197,7 +198,7 @@ function initData(data, domId) {
         $(`#${domId}StaticTable${i}`)
             .bootstrapTable({
                 data: data.staticData[i].data.sort((a, b) => {
-                    return parseInt(b['占比'].replace('%', '')) - parseInt(a['占比'].replace('%', ''))
+                    return parseFloat(b['占比'].replace('%', '')) - parseFloat(a['占比'].replace('%', ''))
                 }),
                 pageNumber: 1, //初始化加载第一页
                 pagination: false,//是否分页
@@ -217,33 +218,48 @@ function initHospitalData(data) {
                 } else if (name.indexOf(
                     hospitalName
                         .replace('市', '')
+                        .replace('第', '')
                         .replace('医院', '')
                         .replace('总院', '')
                         .replace('武汉', '')
                 ) >= 0) {
                     hospitalNameFinal = hospitalName
-                    if (hospitalNameFinal == '市中医医院' && name.indexOf('市中医医院') >= 0) {
-                        hospitalNameFinal = '市中医医院'
-                    } else if (hospitalNameFinal == '市中医医院' && name.indexOf('市中医院') >= 0) {
-                        hospitalNameFinal = '市中医医院'
-                    } else if (hospitalNameFinal == '市中医医院' && name.indexOf('省中医院') >= 0) {
-                        hospitalNameFinal = '省中医医院'
-                    } else if (hospitalNameFinal == '市中医医院' && name.indexOf('省中医医院') >= 0) {
-                        hospitalNameFinal = '省中医医院'
-                    } else if (hospitalNameFinal == '市中医医院' && name.indexOf('黄陂区中医院') >= 0) {
-                        hospitalNameFinal = '黄陂区中医医院'
-                    } else if (hospitalNameFinal == '市中医医院' && name.indexOf('新洲区中医院') >= 0) {
-                        hospitalNameFinal = '新洲区中医医院'
-                    } else if (hospitalNameFinal == '市中医医院' && name.indexOf('江夏区中医院') >= 0) {
-                        hospitalNameFinal = '江夏区中医医院'
-                    } else if (hospitalNameFinal == '市中医医院' && name.indexOf('汉南区中医院') >= 0) {
-                        hospitalNameFinal = '汉南区中医医院'
-                    } else if (hospitalNameFinal == '市中医医院' && name.indexOf('中医') >= 0) {
-                        hospitalNameFinal = '其他中医医院'
-                    }
                 }
             })
-
+            if (hospitalNameFinal == '市中医医院' && name.indexOf('市中医医院') >= 0) {
+                hospitalNameFinal = '市中医医院'
+            } else if (hospitalNameFinal == '市中医医院' && name.indexOf('市中医院') >= 0) {
+                hospitalNameFinal = '市中医医院'
+            } else if (hospitalNameFinal == '市中医医院' && name.indexOf('省中医院') >= 0) {
+                hospitalNameFinal = '省中医医院'
+            } else if (hospitalNameFinal == '市中医医院' && name.indexOf('省中医医院') >= 0) {
+                hospitalNameFinal = '省中医医院'
+            } else if (hospitalNameFinal == '市中医医院' && name.indexOf('黄陂区中医院') >= 0) {
+                hospitalNameFinal = '黄陂区中医医院'
+            } else if (hospitalNameFinal == '市中医医院' && name.indexOf('新洲区中医院') >= 0) {
+                hospitalNameFinal = '新洲区中医医院'
+            } else if (hospitalNameFinal == '市中医医院' && name.indexOf('江夏区中医院') >= 0) {
+                hospitalNameFinal = '江夏区中医医院'
+            } else if (hospitalNameFinal == '市中医医院' && name.indexOf('汉南区中医院') >= 0) {
+                hospitalNameFinal = '汉南区中医医院'
+            } else if (hospitalNameFinal == '市中医医院' && name.indexOf('中医') >= 0) {
+                hospitalNameFinal = '其他中医医院'
+            }
+            if (hospitalNameFinal == '其他非定点医院' && name.indexOf('672') >= 0) {
+                hospitalNameFinal = '六七二医院'
+            }
+            if (hospitalNameFinal == '市第七医院' && name.indexOf('六七二') >= 0) {
+                hospitalNameFinal = '六七二医院'
+            }
+            if (hospitalNameFinal == '市第六医院' && name.indexOf('六七二') >= 0) {
+                hospitalNameFinal = '六七二医院'
+            }
+            if (hospitalNameFinal == '市第二医院' && name.indexOf('六七二') >= 0) {
+                hospitalNameFinal = '六七二医院'
+            }
+            if (hospitalNameFinal == '市第三医院' && name.indexOf('省第三医院') >= 0) {
+                hospitalNameFinal = '省第三医院'
+            }
             return {
                 ...item,
                 hospitalName: hospitalNameFinal
@@ -292,7 +308,7 @@ function initHospitalDataAnalysis(data) {
 function initDistrictDataAnalysis(data) {
     var maskData = data.filter(item => item['物资类型'] == '口罩')
     var suitData = data.filter(item => item['物资类型'] == '防护服')
-    let staticArray = [...staticDistrictArray,'-'];
+    let staticArray = [...staticDistrictArray, '-'];
     let staticField = '区';
     return {
         staticData: [
@@ -382,7 +398,7 @@ $.when(
         );
         $(function () {
             initTotalDataAnalysis(data);
-            var district = initDistrictDataAnalysis(data.filter(item=> item['市'] == '武汉市' && item['接收单位类型'] != '医院'));
+            var district = initDistrictDataAnalysis(data.filter(item => item['市'] == '武汉市' && item['接收单位类型'] != '医院'));
             initData(district, 'district')
             var mask = initMaskDataAnalysis(data);
             initData(mask, 'mask')
