@@ -155,6 +155,14 @@ function getCompanyType(string) {
         return '卫健局'
     } else if (string.indexOf('疾控中心') >= 0) {
         return '疾控中心'
+    } else if (string.indexOf('急救中心') >= 0) {
+        return '急救中心'
+    } else if (string.indexOf('应急储备中心') >= 0) {
+        return '应急储备中心'
+    } else if (string.indexOf('生态环境局') >= 0) {
+        return '生态环境局'
+    } else if (string.indexOf('民政局') >= 0) {
+        return '民政局'
     } else if (string.indexOf('公司') >= 0) {
         return '公司'
     } else if (string.indexOf('共青团') >= 0) {
@@ -192,7 +200,7 @@ function calulateMutipdleNumber(string) {
     } else if (string.indexOf('*') > 0) {
         var tempArray = string.split('*')
         if (tempArray.length == 2) {
-            if(tempArray[0].indexOf('ml')){
+            if (tempArray[0].indexOf('ml')) {
                 return parseInt(tempArray[1]) || 1
             }
             return parseInt(tempArray[0]) * parseInt(tempArray[1]) || 1
@@ -277,11 +285,17 @@ function getProductType(string) {
         return '手术服'
     } else if (string.indexOf('手套') >= 0) {
         return '手套'
+    } else if (string.indexOf('纸尿裤') >= 0) {
+        return '纸尿裤'
+    } else if (string.indexOf('体温计') >= 0) {
+        return '体温计'
     } else if (string.indexOf('空气净化器') >= 0) {
+        return '空气净化器'
+    } else if (string.indexOf('新风净化机') >= 0) {
         return '空气净化器'
     } else if (string.indexOf('消毒液') >= 0) {
         return '消毒液'
-    }  else if (string.indexOf('鞋套') >= 0) {
+    } else if (string.indexOf('鞋套') >= 0) {
         return '鞋套'
     } else {
         return '-'
