@@ -553,10 +553,11 @@ $.when(
     $.get('./0214.json'),
     $.get('./0215.json'),
     $.get('./0217.json'),
+    $.get('./0218.json'),
 )
     .then(function (data_0130, data_0201, data_0202, data_0203, data_0204, data_0206, data_0207,
                     data_0208, data_0209, data_0210, data_0211, data_0212, data_0213, data_0214,
-                    data_0215,data_0217) {
+                    data_0215,data_0217,data_0218) {
         var data_0130_format = Format(data_0130[0], '1月30日');
         var data_0201_format = Format(data_0201[0], '2月01日');
         var data_0202_format = Format(data_0202[0], '2月02日');
@@ -573,6 +574,7 @@ $.when(
         var data_0214_format = Format(data_0214[0], '2月14日');
         var data_0215_format = Format(data_0215[0], '2月15日');
         var data_0217_format = Format(data_0217[0], '2月17日');
+        var data_0218_format = Format(data_0218[0], '2月18日');
         var data = merge(
             data_0130_format,
             data_0201_format,
@@ -590,6 +592,7 @@ $.when(
             data_0214_format,
             data_0215_format,
             data_0217_format,
+            data_0218_format,
         );
         $(function () {
             initTotalDataAnalysis(data);
@@ -680,6 +683,7 @@ $.when(
             getDaliyData(data_0214_format, index);
             getDaliyData(data_0215_format, index);
             getDaliyData(data_0217_format, index);
+            getDaliyData(data_0218_format, index);
             return {
                 '医院': hospital_data,
                 '指挥部': zhihui_data,
