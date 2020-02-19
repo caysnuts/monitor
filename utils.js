@@ -183,22 +183,30 @@ function getCompanyType(string) {
 }
 
 function calulateMutipdleNumber(string) {
+    let tempArray;
     if (!string) {
         return 1
     }
+    if (string == '200支') {
+        return 200
+    }
     if (string.indexOf('/') > 0) {
-        var tempArray = string.split('/')
+        tempArray = string.split('/');
         if (tempArray[0].indexOf(',') > 0) {
             let calArray = tempArray[0].split(',')
             return parseInt(tempArray[0].split(',')[calArray.length - 1]) || 1
+        }
+        if (tempArray[0].indexOf(' ') > 0) {
+            let calArray = tempArray[0].split(' ')
+            return parseInt(tempArray[0].split(' ')[calArray.length - 1]) || 1
         }
         if (tempArray[0].indexOf('，') > 0) {
             let calArray = tempArray[0].split('，')
             return parseInt(tempArray[0].split('，')[calArray.length - 1]) || 1
         }
-        return parseInt(tempArray[0])
+        return parseInt(tempArray[0]) || 1
     } else if (string.indexOf('*') > 0) {
-        var tempArray = string.split('*')
+        tempArray = string.split('*');
         if (tempArray.length == 2) {
             if (tempArray[0].indexOf('ml')) {
                 return parseInt(tempArray[1]) || 1

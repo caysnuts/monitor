@@ -1,5 +1,5 @@
-var  staticCompanyArray = ['医院', '指挥部', '社区', '卫健局', '方舱', '公司',
-    '疾控中心','急救中心','武汉市民政局','生态环境局','应急储备中心','共青团','东湖风景区管委会']
+var staticCompanyArray = ['医院', '指挥部', '社区', '卫健局', '方舱', '公司',
+    '疾控中心', '急救中心', '武汉市民政局', '生态环境局', '应急储备中心', '共青团', '东湖风景区管委会']
 
 
 var staticHospitalArray = [
@@ -229,115 +229,11 @@ function initGlovesDataAnalysis(data) {
         ]
     }
 }
-function initGoggleDataAnalysis(data) {
-    //手套数据
-    var goggleData = data.filter(item => item['物资类型'] == '护目镜');
-    //手套总数
-    var goggleDataTotal = getTotalCount(goggleData)
-    var goggleStaticData = [
-        {
-            '类型': '全部',
-            '数量': goggleDataTotal,
-            '占比': '100 %'
-        },
-        {
-            '类型': '医用',
-            '数量': goggleDataTotal,
-            '占比': Number(goggleDataTotal * 100 / goggleDataTotal)
-                .toFixed(2) + ' %'
-        },
-    ]
 
-    return {
-        totalData: goggleData,
-        staticData: [
-            {
-                name: '分类统计',
-                type: 'sortByType',
-                data: goggleStaticData
-            },
-            {
-                name: '所有',
-                type: 'all',
-                data: staticMaskCommon(goggleDataTotal, goggleData, staticCompanyArray, '接收单位类型')
-            },
-        ]
-    }
-}
-function initPurifierDataAnalysis(data) {
-    //手套数据
-    var goggleData = data.filter(item => item['物资类型'] == '空气净化器');
-    //手套总数
-    var goggleDataTotal = getTotalCount(goggleData)
-    var goggleStaticData = [
-        {
-            '类型': '全部',
-            '数量': goggleDataTotal,
-            '占比': '100 %'
-        },
-        {
-            '类型': '医用',
-            '数量': goggleDataTotal,
-            '占比': Number(goggleDataTotal * 100 / goggleDataTotal)
-                .toFixed(2) + ' %'
-        },
-    ]
-
-    return {
-        totalData: goggleData,
-        staticData: [
-            {
-                name: '分类统计',
-                type: 'sortByType',
-                data: goggleStaticData
-            },
-            {
-                name: '所有',
-                type: 'all',
-                data: staticMaskCommon(goggleDataTotal, goggleData, staticCompanyArray, '接收单位类型')
-            },
-        ]
-    }
-}
-function initDisinfectantDataAnalysis(data) {
-    //手套数据
-    var goggleData = data.filter(item => item['物资类型'] == '消毒液');
-    //手套总数
-    var goggleDataTotal = getTotalCount(goggleData)
-    var goggleStaticData = [
-        {
-            '类型': '全部',
-            '数量': goggleDataTotal,
-            '占比': '100 %'
-        },
-        {
-            '类型': '医用',
-            '数量': goggleDataTotal,
-            '占比': Number(goggleDataTotal * 100 / goggleDataTotal)
-                .toFixed(2) + ' %'
-        },
-    ]
-
-    return {
-        totalData: goggleData,
-        staticData: [
-            {
-                name: '分类统计',
-                type: 'sortByType',
-                data: goggleStaticData
-            },
-            {
-                name: '所有',
-                type: 'all',
-                data: staticMaskCommon(goggleDataTotal, goggleData, staticCompanyArray, '接收单位类型')
-            },
-        ]
-    }
-}
-function initShoeDataAnalysis(data) {
-    //手套数据
-    var goggleData = data.filter(item => item['物资类型'] == '鞋套');
-    //手套总数
+function initTypeDataAnalysis(data, type) {
+    //数据
+    var goggleData = data.filter(item => item['物资类型'] == type);
+    //总数
     var goggleDataTotal = getTotalCount(goggleData)
     var goggleStaticData = [
         {
@@ -377,7 +273,7 @@ function initData(data, domId) {
             search: true,
             sortable: true,
             sortName: '估算量',                    // 设置默认排序为 name
-            sortOrder: "desc",
+            sortOrder: 'desc',
             pageNumber: 1, //初始化加载第一页
             pagination: true,//是否分页
             sidePagination: 'client',//server:服务器端分页|client：前端分页
@@ -558,7 +454,7 @@ $.when(
 )
     .then(function (data_0130, data_0201, data_0202, data_0203, data_0204, data_0206, data_0207,
                     data_0208, data_0209, data_0210, data_0211, data_0212, data_0213, data_0214,
-                    data_0215,data_0217,data_0218) {
+                    data_0215, data_0217, data_0218) {
         var data_0130_format = Format(data_0130[0], '1月30日');
         var data_0201_format = Format(data_0201[0], '2月01日');
         var data_0202_format = Format(data_0202[0], '2月02日');
@@ -609,17 +505,23 @@ $.when(
             var gloves = initGlovesDataAnalysis(data);
             initData(gloves, 'gloves')
 
-            var goggle = initGoggleDataAnalysis(data);
+            var goggle = initTypeDataAnalysis(data, '护目镜');
             initData(goggle, 'goggle')
 
-            var purifier = initPurifierDataAnalysis(data);
+            var purifier = initTypeDataAnalysis(data, '空气净化器');
             initData(purifier, 'purifier')
 
-            var disinfectant = initDisinfectantDataAnalysis(data);
+            var disinfectant = initTypeDataAnalysis(data, '消毒液');
             initData(disinfectant, 'disinfectant')
 
-            var shoe = initShoeDataAnalysis(data);
+            var shoe = initTypeDataAnalysis(data, '鞋套');
             initData(shoe, 'shoe')
+
+            var diapers = initTypeDataAnalysis(data, '纸尿裤');
+            initData(diapers, 'diapers')
+
+            var thermometer = initTypeDataAnalysis(data, '体温计');
+            initData(thermometer, 'thermometer')
 
             var maskHospitalData = mask.totalData.filter(item => item['接收单位类型'] == '医院' && item['市'] == '武汉市')
             var suitHospitalData = suit.totalData.filter(item => item['接收单位类型'] == '医院' && item['市'] == '武汉市')
@@ -640,7 +542,7 @@ $.when(
                 })
         })
 
-        function chartDataInit(datafunc, index) {
+        function chartDataInit(datafunc, index, type) {
             var hospital_data = [];
             var zhihui_data = [];
             var social_data = [];
@@ -649,7 +551,7 @@ $.when(
             var company_data = [];
 
             function getDaliyData(formatData, index) {
-                var static_data = datafunc(formatData).staticData[index].data;
+                var static_data = datafunc(formatData, type).staticData[index].data;
                 static_data.map(item => {
                     var count = parseInt(item['数量'].replace(/,/g, ''));
                     if (item['类型'] == '医院') {
@@ -702,9 +604,11 @@ $.when(
         initChart('suitMainChartDoctor', chartDataInit(initSuitDataAnalysis, 2))
         initChart('glovesMainChart', chartDataInit(initGlovesDataAnalysis, 1))
         initChart('glovesMainChartDoctor', chartDataInit(initGlovesDataAnalysis, 2))
-        initChart('goggleMainChart', chartDataInit(initGoggleDataAnalysis, 1))
-        initChart('purifierMainChart', chartDataInit(initPurifierDataAnalysis, 1))
-        initChart('disinfectantMainChart', chartDataInit(initDisinfectantDataAnalysis, 1))
-        initChart('shoeMainChart', chartDataInit(initShoeDataAnalysis, 1))
+        initChart('goggleMainChart', chartDataInit(initTypeDataAnalysis, 1,'护目镜'))
+        initChart('purifierMainChart', chartDataInit(initTypeDataAnalysis, 1,'空气净化器'))
+        initChart('disinfectantMainChart', chartDataInit(initTypeDataAnalysis, 1,'消毒液'))
+        initChart('shoeMainChart', chartDataInit(initTypeDataAnalysis, 1,'鞋套'))
+        initChart('diapersMainChart', chartDataInit(initTypeDataAnalysis, 1,'纸尿裤'))
+        initChart('thermometerMainChart', chartDataInit(initTypeDataAnalysis, 1,'体温计'))
 
     })
