@@ -14,7 +14,7 @@ function initChart(domId,data){
             }
         },
         legend: {
-            data: ['医院', '指挥部', '社区', '卫健局', '方舱', '公司']
+            data: ['医院', '指挥部','卫健局', '方舱']
         },
         toolbox: {
             feature: {
@@ -55,13 +55,13 @@ function initChart(domId,data){
                 areaStyle: {},
                 data: data['指挥部']
             },
-            {
-                name: '社区',
-                type: 'line',
-                stack: '社区',
-                areaStyle: {},
-                data: data['社区']
-            },
+            // {
+            //     name: '社区',
+            //     type: 'line',
+            //     stack: '社区',
+            //     areaStyle: {},
+            //     data: data['社区']
+            // },
             {
                 name: '卫健局',
                 type: 'line',
@@ -75,13 +75,14 @@ function initChart(domId,data){
                 stack: '方舱',
                 areaStyle: {},
                 data: data['方舱']
-            }, {
-                name: '公司',
-                type: 'line',
-                stack: '公司',
-                areaStyle: {},
-                data: data['公司']
-            }
+            },
+            // {
+            //     name: '公司',
+            //     type: 'line',
+            //     stack: '公司',
+            //     areaStyle: {},
+            //     data: data['公司']
+            // }
         ]
     };
     myChart.setOption(option);

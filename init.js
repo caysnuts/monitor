@@ -124,17 +124,17 @@ function initMaskDataAnalysis(data) {
             {
                 name: '所有',
                 type: 'all',
-                data: staticMaskCommon(maskDataTotal, maskData, staticArray, staticField)
+                data: staticForCommonNoZero(maskDataTotal, maskData, staticArray, staticField)
             },
             {
                 name: 'N95',
                 type: 'N95',
-                data: staticMaskCommon(maskN95DataTotal, maskN95Data, staticArray, staticField)
+                data: staticForCommonNoZero(maskN95DataTotal, maskN95Data, staticArray, staticField)
             },
             {
                 name: '医用',
                 type: 'doctor',
-                data: staticMaskCommon(maskDoctorDataTotal, maskDoctorData, staticArray, staticField)
+                data: staticForCommonNoZero(maskDoctorDataTotal, maskDoctorData, staticArray, staticField)
             },
         ]
     }
@@ -174,12 +174,12 @@ function initSuitDataAnalysis(data) {
             {
                 name: '所有',
                 type: 'all',
-                data: staticMaskCommon(suitDataTotal, suitData, staticCompanyArray, '接收单位类型')
+                data: staticForCommonNoZero(suitDataTotal, suitData, staticCompanyArray, '接收单位类型')
             },
             {
                 name: '医用',
                 type: 'doctor',
-                data: staticMaskCommon(suitDoctorDataTotal, suitDoctorData, staticCompanyArray, '接收单位类型')
+                data: staticForCommonNoZero(suitDoctorDataTotal, suitDoctorData, staticCompanyArray, '接收单位类型')
             },
         ]
     }
@@ -219,12 +219,12 @@ function initGlovesDataAnalysis(data) {
             {
                 name: '所有',
                 type: 'all',
-                data: staticMaskCommon(glovesDataTotal, glovesData, staticCompanyArray, '接收单位类型')
+                data: staticForCommonNoZero(glovesDataTotal, glovesData, staticCompanyArray, '接收单位类型')
             },
             {
                 name: '医用',
                 type: 'doctor',
-                data: staticMaskCommon(glovesDoctorDataTotal, glovesDoctorData, staticCompanyArray, '接收单位类型')
+                data: staticForCommonNoZero(glovesDoctorDataTotal, glovesDoctorData, staticCompanyArray, '接收单位类型')
             },
         ]
     }
@@ -235,37 +235,33 @@ function initTypeDataAnalysis(data, type) {
     var goggleData = data.filter(item => item['物资类型'] == type);
     //总数
     var goggleDataTotal = getTotalCount(goggleData)
-    var goggleStaticData = [
-        {
-            '类型': '全部',
-            '数量': goggleDataTotal,
-            '占比': '100 %'
-        },
-        {
-            '类型': '医用',
-            '数量': goggleDataTotal,
-            '占比': Number(goggleDataTotal * 100 / goggleDataTotal)
-                .toFixed(2) + ' %'
-        },
-    ]
-
     return {
         totalData: goggleData,
         staticData: [
             {
-                name: '分类统计',
-                type: 'sortByType',
-                data: goggleStaticData
-            },
-            {
                 name: '所有',
                 type: 'all',
-                data: staticMaskCommon(goggleDataTotal, goggleData, staticCompanyArray, '接收单位类型')
+                data: staticForCommonNoZero(goggleDataTotal, goggleData, staticCompanyArray, '接收单位类型')
             },
         ]
     }
 }
-
+function initTypeDataAnalysisForTime(data, type) {
+    //数据
+    var goggleData = data.filter(item => item['物资类型'] == type);
+    //总数
+    var goggleDataTotal = getTotalCount(goggleData)
+    return {
+        totalData: goggleData,
+        staticData: [
+            {
+                name: '所有',
+                type: 'all',
+                data: staticForCommonTime(goggleDataTotal, goggleData, staticCompanyArray, '接收单位类型')
+            },
+        ]
+    }
+}
 function initData(data, domId) {
     $(`#${domId}Table`)
         .bootstrapTable({
@@ -292,6 +288,97 @@ function initData(data, domId) {
                 sidePagination: 'client',//server:服务器端分页|client：前端分页
             })
     }
+}
+
+function initDataCommon(data, domId, name) {
+    let html =
+        `<h3>总数量统计</h3>
+            <div class="static">
+                <div>
+                    <table id="${domId}StaticTable0" style="width: 700px">
+                        <thead>
+                        <tr>
+                            <th data-field="类型">类型</th>
+                            <th data-field="数量">数量</th>
+                            <th data-field="占比">占比</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <h3>${name} 明细查询</h3>
+            <div>
+                <table id="${domId}Table">
+                    <thead>
+                    <tr>
+                        <th data-field="接收单位">接收单位</th>
+                        <th data-field="品名">品名</th>
+                        <th data-field="规格">规格</th>
+                        <th data-field="计量单位">计量单位</th>
+                        <th data-field="数量">数量</th>
+                        <th data-field="时间">时间</th>
+                        <th data-field="估算量">估算量</th>
+                        <th data-field="市">市</th>
+                        <th data-field="区">区</th>
+                        <th data-field="接收单位类型">接收单位类型</th>
+                        <th data-field="二级分类">二级分类</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>`;
+    $(`#${domId}`)
+        .append($(html))
+    $(`#${domId}Table`)
+        .bootstrapTable({
+            data: data.totalData,
+            search: true,
+            sortable: true,
+            sortName: '估算量',                    // 设置默认排序为 name
+            sortOrder: 'desc',
+            pageNumber: 1, //初始化加载第一页
+            pagination: true,//是否分页
+            sidePagination: 'client',//server:服务器端分页|client：前端分页
+            pageSize: 10,//单页记录数
+            pageList: [20, 40, 60, 100],//可选择单页记录数
+        })
+    $(`#${domId}StaticTable0`)
+        .bootstrapTable({
+            data: data.staticData[0].data.sort((a, b) => {
+                return parseFloat(b['占比'].replace('%', '')) - parseFloat(a['占比'].replace('%', ''))
+            }),
+            pageNumber: 1, //初始化加载第一页
+            pagination: false,//是否分页
+            sidePagination: 'client',//server:服务器端分页|client：前端分页
+        })
+}
+function initDataHospital(data, domId, name) {
+    let html =
+        `<div class="static">
+                <div>
+                    <h5 id="${domId}StaticTitle0">${name}</h5>
+                    <table id="${domId}StaticTable0" style="width: 300px">
+                        <thead>
+                        <tr>
+                            <th data-field="类型">类型</th>
+                            <th data-field="数量">数量</th>
+                            <th data-field="占比">占比</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>`;
+    $(`#${domId}`)
+        .append($(html))
+    $(`#${domId}StaticTable0`)
+        .bootstrapTable({
+            data: data.staticData[0].data.sort((a, b) => {
+                return parseFloat(b['占比'].replace('%', '')) - parseFloat(a['占比'].replace('%', ''))
+            }),
+            pageNumber: 1, //初始化加载第一页
+            pagination: false,//是否分页
+            sidePagination: 'client',//server:服务器端分页|client：前端分页
+        })
 }
 
 function initHospitalData(data) {
@@ -355,38 +442,19 @@ function initHospitalData(data) {
     }
 }
 
-function initHospitalDataAnalysis(data) {
-    //口罩数据
+function initHospitalDataAnalysis(data, name) {
+    //数据
     var maskData = data.filter(item => item['接收单位类型'] == '医院');
-    //n95口罩数据
-    var maskN95Data = maskData.filter(item => item['二级分类'] == 'N95');
-    //医用口罩数据
-    var maskDoctorData = maskData.filter(item => item['二级分类'] == '医用');
-    //口罩总数
+    //总数
     var maskDataTotal = getTotalCount(maskData)
-    //N95口罩总数
-    var maskN95DataTotal = getTotalCount(maskN95Data)
-    //医用口罩总数
-    var maskDoctorDataTotal = getTotalCount(maskDoctorData)
     let staticField = 'hospitalName';
     let staticHospitalArrayFinal = [...staticHospitalArray, '其他中医医院']
     return {
         totalData: maskData,
         staticData: [
             {
-                name: '所有',
-                type: 'all',
-                data: staticMaskCommon(maskDataTotal, maskData, staticHospitalArrayFinal, staticField)
-            },
-            {
-                name: '医用',
-                type: 'doctor',
-                data: staticMaskCommon(maskDoctorDataTotal, maskDoctorData, staticHospitalArrayFinal, staticField)
-            },
-            {
-                name: 'N95',
-                type: 'N95',
-                data: staticMaskCommon(maskN95DataTotal, maskN95Data, staticHospitalArrayFinal, staticField)
+                name: name,
+                data: staticForCommonNoZero(maskDataTotal, maskData, staticHospitalArrayFinal, staticField)
             },
         ]
     }
@@ -402,17 +470,17 @@ function initDistrictDataAnalysis(data) {
             {
                 name: '所有物资',
                 type: 'all',
-                data: staticMaskCommon(getTotalCount(data), data, staticArray, staticField)
+                data: staticForCommonNoZero(getTotalCount(data), data, staticArray, staticField)
             },
             {
                 name: '口罩',
                 type: 'mask',
-                data: staticMaskCommon(getTotalCount(maskData), maskData, staticArray, staticField)
+                data: staticForCommonNoZero(getTotalCount(maskData), maskData, staticArray, staticField)
             },
             {
                 name: '防护服',
                 type: 'mask',
-                data: staticMaskCommon(getTotalCount(suitData), suitData, staticArray, staticField)
+                data: staticForCommonNoZero(getTotalCount(suitData), suitData, staticArray, staticField)
             },
 
         ]
@@ -506,33 +574,46 @@ $.when(
             initData(gloves, 'gloves')
 
             var goggle = initTypeDataAnalysis(data, '护目镜');
-            initData(goggle, 'goggle')
+            initDataCommon(goggle, 'goggle', '护目镜')
 
             var purifier = initTypeDataAnalysis(data, '空气净化器');
-            initData(purifier, 'purifier')
+            initDataCommon(purifier, 'purifier', '空气净化器')
 
             var disinfectant = initTypeDataAnalysis(data, '消毒液');
-            initData(disinfectant, 'disinfectant')
+            initDataCommon(disinfectant, 'disinfectant', '消毒液')
 
             var shoe = initTypeDataAnalysis(data, '鞋套');
-            initData(shoe, 'shoe')
+            initDataCommon(shoe, 'shoe', '鞋套')
 
             var diapers = initTypeDataAnalysis(data, '纸尿裤');
-            initData(diapers, 'diapers')
+            initDataCommon(diapers, 'diapers', '纸尿裤')
 
             var thermometer = initTypeDataAnalysis(data, '体温计');
-            initData(thermometer, 'thermometer')
+            initDataCommon(thermometer, 'thermometer', '体温计')
 
-            var maskHospitalData = mask.totalData.filter(item => item['接收单位类型'] == '医院' && item['市'] == '武汉市')
-            var suitHospitalData = suit.totalData.filter(item => item['接收单位类型'] == '医院' && item['市'] == '武汉市')
-            var suitHospital = initHospitalDataAnalysis(initHospitalData(suitHospitalData))
-            initData(suitHospital, 'hospitalSuit')
-            var maskHospital = initHospitalDataAnalysis(initHospitalData(maskHospitalData))
-            initData(maskHospital, 'hospitalMask')
+            function filterLocationAndHospital(data){
+                return data.totalData.filter(item => item['接收单位类型'] == '医院' && item['市'] == '武汉市')
+            }
+            function initHospitalItem(data,domId,name){
+                var hospitalData = filterLocationAndHospital(data)
+                var itemHospital = initHospitalDataAnalysis(initHospitalData(hospitalData), name)
+                initDataHospital(itemHospital,domId, name)
+
+            }
+            initHospitalItem(mask,'hospitalMask','口罩')
+            initHospitalItem(suit,'hospitalSuit','防护服')
+            initHospitalItem(gloves,'hospitalGloves','手套')
+            initHospitalItem(goggle,'hospitalGoggle','护目镜')
+            initHospitalItem(purifier,'hospitalPurifier','空气净化器')
+            initHospitalItem(disinfectant,'hospitalDisinfectant','消毒液')
+            initHospitalItem(shoe,'hospitalShoe','鞋套')
+            initHospitalItem(diapers,'hospitalDiapers','纸尿裤')
+            initHospitalItem(thermometer,'hospitalThermometer','体温计')
+
 
             $('#hospitalTable')
                 .bootstrapTable({
-                    data: merge(maskHospitalData, suitHospitalData),
+                    data: filterLocationAndHospital(data),
                     search: true,
                     pageNumber: 1, //初始化加载第一页
                     pagination: true,//是否分页
@@ -597,18 +678,14 @@ $.when(
             }
         }
 
-        initChart('maskMainChart', chartDataInit(initMaskDataAnalysis, 1))
-        initChart('maskMainChartN95', chartDataInit(initMaskDataAnalysis, 2))
-        initChart('maskMainChartDoctor', chartDataInit(initMaskDataAnalysis, 3))
-        initChart('suitMainChart', chartDataInit(initSuitDataAnalysis, 1))
-        initChart('suitMainChartDoctor', chartDataInit(initSuitDataAnalysis, 2))
-        initChart('glovesMainChart', chartDataInit(initGlovesDataAnalysis, 1))
-        initChart('glovesMainChartDoctor', chartDataInit(initGlovesDataAnalysis, 2))
-        initChart('goggleMainChart', chartDataInit(initTypeDataAnalysis, 1,'护目镜'))
-        initChart('purifierMainChart', chartDataInit(initTypeDataAnalysis, 1,'空气净化器'))
-        initChart('disinfectantMainChart', chartDataInit(initTypeDataAnalysis, 1,'消毒液'))
-        initChart('shoeMainChart', chartDataInit(initTypeDataAnalysis, 1,'鞋套'))
-        initChart('diapersMainChart', chartDataInit(initTypeDataAnalysis, 1,'纸尿裤'))
-        initChart('thermometerMainChart', chartDataInit(initTypeDataAnalysis, 1,'体温计'))
+        initChart('maskMainChart', chartDataInit(initTypeDataAnalysisForTime, 0, '口罩'))
+        initChart('suitMainChart', chartDataInit(initTypeDataAnalysisForTime, 0, '防护服'))
+        initChart('glovesMainChart', chartDataInit(initTypeDataAnalysisForTime, 0, '手套'))
+        initChart('goggleMainChart', chartDataInit(initTypeDataAnalysisForTime, 0, '护目镜'))
+        initChart('purifierMainChart', chartDataInit(initTypeDataAnalysisForTime, 0, '空气净化器'))
+        initChart('disinfectantMainChart', chartDataInit(initTypeDataAnalysisForTime, 0, '消毒液'))
+        initChart('shoeMainChart', chartDataInit(initTypeDataAnalysisForTime, 0, '鞋套'))
+        initChart('diapersMainChart', chartDataInit(initTypeDataAnalysisForTime, 0, '纸尿裤'))
+        initChart('thermometerMainChart', chartDataInit(initTypeDataAnalysisForTime, 0, '体温计'))
 
     })

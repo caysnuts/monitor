@@ -387,7 +387,7 @@ const reducer = (accumulator, currentValue) => {
     return (parseInt(accumulator) || 0) + (parseInt(currentValue) || 0);
 }
 
-function staticMaskCommon(maskDataTotal, maskData, staticArray, staticField) {
+function staticForCommonTime(maskDataTotal, maskData, staticArray, staticField) {
     var staticResult = staticArray.map(arrayItem => {
         var countTotal = 0;
         try {
@@ -403,6 +403,34 @@ function staticMaskCommon(maskDataTotal, maskData, staticArray, staticField) {
                 .toFixed(2) + ' %'
         }
     })
+    return [
+        {
+            '类型': '全部',
+            '数量': toThousands(maskDataTotal),
+            '占比': '100 %'
+        },
+        ...staticResult
+    ]
+}
+function staticForCommonNoZero(maskDataTotal, maskData, staticArray, staticField) {
+    let staticResult = [];
+    staticArray.map(arrayItem => {
+        let countTotal = 0;
+        try {
+            countTotal = maskData.filter(item => item[staticField] == arrayItem)
+                .map(item => item['估算量'])
+                .reduce(reducer);
+        } catch (e) {
+        }
+        if(countTotal){
+            staticResult.push({
+                '类型': arrayItem,
+                '数量': toThousands(countTotal),
+                '占比': Number(countTotal * 100 / maskDataTotal)
+                    .toFixed(2) + ' %'
+            })
+        }
+    });
     return [
         {
             '类型': '全部',
