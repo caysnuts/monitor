@@ -305,6 +305,8 @@ function getProductType(string) {
         return '消毒液'
     } else if (string.indexOf('鞋套') >= 0) {
         return '鞋套'
+    } else if (string.indexOf('保暖内衣') >= 0) {
+        return '保暖内衣'
     } else {
         return '-'
     }

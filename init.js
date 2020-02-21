@@ -677,6 +677,9 @@ $.when(
             var thermometer = initTypeDataAnalysis(data, '体温计');
             initDataCommon(thermometer, 'thermometer', '体温计')
 
+            var underwear = initTypeDataAnalysis(data, '保暖内衣');
+            initDataCommon(underwear, 'underwear', '保暖内衣')
+
             function filterLocationAndHospital(data) {
                 return data.totalData.filter(item => item['接收单位类型'] == '医院' && item['市'] == '武汉市')
             }
