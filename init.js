@@ -58,6 +58,27 @@ var staticDistrictArray = [
     '东湖风景',
 ]
 
+function rowStyle(row, index){
+    if (row['类型'] == '指挥部' || row['类型'] == '卫健局') {
+        return {
+            css: {
+                color: 'red'
+            }
+        }
+    }
+    if (parseFloat(row['占比'].replace("%","")) >= 10) {
+        console.log(parseFloat(row['占比'].replace("%","")))
+        return {
+            css: {
+                'font-weight': '600'
+            }
+        }
+    }
+    return {
+        css: {}
+    }
+}
+
 function initTotalDataAnalysis(data) {
     $('#table')
         .bootstrapTable({
@@ -246,6 +267,7 @@ function initTypeDataAnalysis(data, type) {
         ]
     }
 }
+
 function initTypeDataAnalysisForTime(data, type) {
     //数据
     var goggleData = data.filter(item => item['物资类型'] == type);
@@ -262,6 +284,7 @@ function initTypeDataAnalysisForTime(data, type) {
         ]
     }
 }
+
 function initData(data, domId) {
     $(`#${domId}Table`)
         .bootstrapTable({
@@ -286,6 +309,7 @@ function initData(data, domId) {
                 pageNumber: 1, //初始化加载第一页
                 pagination: false,//是否分页
                 sidePagination: 'client',//server:服务器端分页|client：前端分页
+                rowStyle:rowStyle
             })
     }
 }
@@ -295,7 +319,10 @@ function initDataCommon(data, domId, name) {
         `<h3>总数量统计</h3>
             <div class="static">
                 <div>
-                    <table id="${domId}StaticTable0" style="width: 700px">
+                    <table 
+                    id="${domId}StaticTable0" 
+                    style="width: 700px"
+                    >
                         <thead>
                         <tr>
                             <th data-field="类型">类型</th>
@@ -350,14 +377,19 @@ function initDataCommon(data, domId, name) {
             pageNumber: 1, //初始化加载第一页
             pagination: false,//是否分页
             sidePagination: 'client',//server:服务器端分页|client：前端分页
+            rowStyle:rowStyle
         })
 }
+
 function initDataHospital(data, domId, name) {
     let html =
         `<div class="static">
                 <div>
                     <h5 id="${domId}StaticTitle0">${name}</h5>
-                    <table id="${domId}StaticTable0" style="width: 300px">
+                    <table 
+                    id="${domId}StaticTable0" 
+                    style="width: 300px"
+                    >
                         <thead>
                         <tr>
                             <th data-field="类型">类型</th>
@@ -378,6 +410,7 @@ function initDataHospital(data, domId, name) {
             pageNumber: 1, //初始化加载第一页
             pagination: false,//是否分页
             sidePagination: 'client',//server:服务器端分页|client：前端分页
+            rowStyle:rowStyle
         })
 }
 
@@ -463,6 +496,13 @@ function initHospitalDataAnalysis(data, name) {
 function initDistrictDataAnalysis(data) {
     var maskData = data.filter(item => item['物资类型'] == '口罩')
     var suitData = data.filter(item => item['物资类型'] == '防护服')
+    var glovesData = data.filter(item => item['物资类型'] == '手套')
+    var goggleData = data.filter(item => item['物资类型'] == '护目镜')
+    var purifierData = data.filter(item => item['物资类型'] == '空气净化器')
+    var disinfectantData = data.filter(item => item['物资类型'] == '消毒液')
+    var shoeData = data.filter(item => item['物资类型'] == '鞋套')
+    var diapersData = data.filter(item => item['物资类型'] == '纸尿裤')
+    var thermometerData = data.filter(item => item['物资类型'] == '体温计')
     let staticArray = [...staticDistrictArray, '-'];
     let staticField = '区';
     return {
@@ -481,6 +521,41 @@ function initDistrictDataAnalysis(data) {
                 name: '防护服',
                 type: 'mask',
                 data: staticForCommonNoZero(getTotalCount(suitData), suitData, staticArray, staticField)
+            },
+            {
+                name: '手套',
+                type: 'mask',
+                data: staticForCommonNoZero(getTotalCount(glovesData), glovesData, staticArray, staticField)
+            },
+            {
+                name: '护目镜',
+                type: 'mask',
+                data: staticForCommonNoZero(getTotalCount(goggleData), goggleData, staticArray, staticField)
+            },
+            {
+                name: '空气净化器',
+                type: 'mask',
+                data: staticForCommonNoZero(getTotalCount(purifierData), purifierData, staticArray, staticField)
+            },
+            {
+                name: '消毒液',
+                type: 'mask',
+                data: staticForCommonNoZero(getTotalCount(disinfectantData), disinfectantData, staticArray, staticField)
+            },
+            {
+                name: '鞋套',
+                type: 'mask',
+                data: staticForCommonNoZero(getTotalCount(shoeData), shoeData, staticArray, staticField)
+            },
+            {
+                name: '纸尿裤',
+                type: 'mask',
+                data: staticForCommonNoZero(getTotalCount(diapersData), diapersData, staticArray, staticField)
+            },
+            {
+                name: '体温计',
+                type: 'mask',
+                data: staticForCommonNoZero(getTotalCount(thermometerData), thermometerData, staticArray, staticField)
             },
 
         ]
@@ -564,7 +639,12 @@ $.when(
         );
         $(function () {
             initTotalDataAnalysis(data);
-            var district = initDistrictDataAnalysis(data.filter(item => item['市'] == '武汉市' && item['接收单位类型'] != '医院'));
+            var district = initDistrictDataAnalysis(data.filter(
+                item => item['市'] == '武汉市' && (
+                    item['接收单位类型'] == '指挥部'
+                    || item['接收单位类型'] == '卫健局'
+                ))
+            );
             initData(district, 'district')
 
             var mask = initMaskDataAnalysis(data);
@@ -594,24 +674,26 @@ $.when(
             var thermometer = initTypeDataAnalysis(data, '体温计');
             initDataCommon(thermometer, 'thermometer', '体温计')
 
-            function filterLocationAndHospital(data){
+            function filterLocationAndHospital(data) {
                 return data.totalData.filter(item => item['接收单位类型'] == '医院' && item['市'] == '武汉市')
             }
-            function initHospitalItem(data,domId,name){
+
+            function initHospitalItem(data, domId, name) {
                 var hospitalData = filterLocationAndHospital(data)
                 var itemHospital = initHospitalDataAnalysis(initHospitalData(hospitalData), name)
-                initDataHospital(itemHospital,domId, name)
+                initDataHospital(itemHospital, domId, name)
 
             }
-            initHospitalItem(mask,'hospitalMask','口罩')
-            initHospitalItem(suit,'hospitalSuit','防护服')
-            initHospitalItem(gloves,'hospitalGloves','手套')
-            initHospitalItem(goggle,'hospitalGoggle','护目镜')
-            initHospitalItem(purifier,'hospitalPurifier','空气净化器')
-            initHospitalItem(disinfectant,'hospitalDisinfectant','消毒液')
-            initHospitalItem(shoe,'hospitalShoe','鞋套')
-            initHospitalItem(diapers,'hospitalDiapers','纸尿裤')
-            initHospitalItem(thermometer,'hospitalThermometer','体温计')
+
+            initHospitalItem(mask, 'hospitalMask', '口罩')
+            initHospitalItem(suit, 'hospitalSuit', '防护服')
+            initHospitalItem(gloves, 'hospitalGloves', '手套')
+            initHospitalItem(goggle, 'hospitalGoggle', '护目镜')
+            initHospitalItem(purifier, 'hospitalPurifier', '空气净化器')
+            initHospitalItem(disinfectant, 'hospitalDisinfectant', '消毒液')
+            initHospitalItem(shoe, 'hospitalShoe', '鞋套')
+            initHospitalItem(diapers, 'hospitalDiapers', '纸尿裤')
+            initHospitalItem(thermometer, 'hospitalThermometer', '体温计')
 
 
             $('#hospitalTable')
