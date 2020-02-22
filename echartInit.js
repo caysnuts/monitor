@@ -1,4 +1,4 @@
-function initChart(domId,data){
+function initChart(domId, data) {
     var myChart = echarts.init(document.getElementById(domId));
     var option = {
         title: {
@@ -14,7 +14,7 @@ function initChart(domId,data){
             }
         },
         legend: {
-            data: ['医院', '指挥部','卫健局', '方舱']
+            data: ['医院', '指挥部', '卫健局', '方舱']
         },
         toolbox: {
             feature: {
@@ -33,7 +33,7 @@ function initChart(domId,data){
                 boundaryGap: false,
                 data: ['0130', '0201', '0202', '0203', '0204', '0206', '0207', '0208', '0209',
                     '0210', '0211', '0212', '0213', '0214', '0215', '0217', '0218', '0219',
-                    '0220']
+                    '0220', '0221']
             }
         ],
         yAxis: [
