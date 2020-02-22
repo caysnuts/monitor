@@ -311,6 +311,44 @@ function getProductType(string) {
         return '洗衣液'
     } else if (string.indexOf('花露水') >= 0) {
         return '花露水'
+    } else if (
+        string.indexOf('氨酚烷胺') >= 0
+        || string.indexOf('泡腾') >= 0
+        || string.indexOf('利巴韦林') >= 0
+        || string.indexOf('阿奇霉素') >= 0
+        || string.indexOf('氯酸烷') >= 0
+        || string.indexOf('抗病毒口服液') >= 0
+        || string.indexOf('维生素C泡腾片') >= 0
+        || string.indexOf('对乙酰氨基酚泡腾片') >= 0
+        || string.indexOf('羧甲司坦泡腾片') >= 0
+        || string.indexOf('头孢他啶') >= 0
+        || string.indexOf('利巴韦林') >= 0
+        || string.indexOf('头孢克洛') >= 0
+    ) {
+        return '西药'
+    } else if (
+        string.indexOf('香薷水') >= 0
+        || string.indexOf('甘草') >= 0
+        || string.indexOf('板蓝根') >= 0
+        || string.indexOf('金银花') >= 0
+        || string.indexOf('一枝蒿') >= 0
+        || string.indexOf('银花') >= 0
+        || string.indexOf('喉痛灵') >= 0
+        || (string.indexOf('胶囊') >= 0 && string.indexOf('羟丙甲纤维空心胶囊') < 0)
+        || string.indexOf('口服液') >= 0
+    ) {
+        return '中成药'
+    } else if (
+        string.indexOf('敖东酵素') >= 0
+        || string.indexOf('泡腾') >= 0
+    ) {
+        return '保健品'
+    } else if (
+        string.indexOf('生脉注射液') >= 0
+        || string.indexOf('痰热清注射液') >= 0
+        || string.indexOf('参附注射液') >= 0
+    ) {
+        return '中药注射液'
     } else if (string.indexOf('制氧机') >= 0) {
         return '制氧机'
     } else {

@@ -67,7 +67,6 @@ function rowStyle(row, index) {
         }
     }
     if (parseFloat(row['占比'].replace('%', '')) >= 10) {
-        console.log(parseFloat(row['占比'].replace('%', '')))
         return {
             css: {
                 'font-weight': '600'
@@ -708,6 +707,18 @@ $.when(
             var toiletWater = initTypeDataAnalysis(data, '花露水');
             initDataCommon(toiletWater, 'toiletWater', '花露水')
 
+            var chinesePatentMedicine = initTypeDataAnalysis(data, '中成药');
+            initDataCommon(chinesePatentMedicine, 'chinesePatentMedicine', '中成药')
+
+            var medicine = initTypeDataAnalysis(data, '西药');
+            initDataCommon(medicine, 'medicine', '西药')
+
+            var healthProducts = initTypeDataAnalysis(data, '保健品');
+            initDataCommon(healthProducts, 'healthProducts', '保健品')
+
+            var devil = initTypeDataAnalysis(data, '中药注射液');
+            initDataCommon(devil, 'devil', '中药注射液')
+
             function filterLocationAndHospital(data) {
                 return data.totalData.filter(item => item['接收单位类型'] == '医院' && item['市'] == '武汉市')
             }
@@ -728,6 +739,10 @@ $.when(
             initHospitalItem(shoe, 'hospitalShoe', '鞋套')
             initHospitalItem(diapers, 'hospitalDiapers', '纸尿裤')
             initHospitalItem(thermometer, 'hospitalThermometer', '体温计')
+            initHospitalItem(chinesePatentMedicine, 'hospitalChinesePatentMedicine', '中成药')
+            initHospitalItem(medicine, 'hospitalMedicine', '西药')
+            initHospitalItem(healthProducts, 'hospitalHealthProducts', '保健品')
+            initHospitalItem(devil, 'hospitalDevil', '中药注射液')
 
             $('#hospitalTable')
                 .bootstrapTable({
