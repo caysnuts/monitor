@@ -58,7 +58,7 @@ var staticDistrictArray = [
     '东湖风景',
 ]
 
-function rowStyle(row, index){
+function rowStyle(row, index) {
     if (row['类型'] == '指挥部' || row['类型'] == '卫健局') {
         return {
             css: {
@@ -66,8 +66,8 @@ function rowStyle(row, index){
             }
         }
     }
-    if (parseFloat(row['占比'].replace("%","")) >= 10) {
-        console.log(parseFloat(row['占比'].replace("%","")))
+    if (parseFloat(row['占比'].replace('%', '')) >= 10) {
+        console.log(parseFloat(row['占比'].replace('%', '')))
         return {
             css: {
                 'font-weight': '600'
@@ -309,7 +309,7 @@ function initData(data, domId) {
                 pageNumber: 1, //初始化加载第一页
                 pagination: false,//是否分页
                 sidePagination: 'client',//server:服务器端分页|client：前端分页
-                rowStyle:rowStyle
+                rowStyle: rowStyle
             })
     }
 }
@@ -377,7 +377,7 @@ function initDataCommon(data, domId, name) {
             pageNumber: 1, //初始化加载第一页
             pagination: false,//是否分页
             sidePagination: 'client',//server:服务器端分页|client：前端分页
-            rowStyle:rowStyle
+            rowStyle: rowStyle
         })
 }
 
@@ -410,7 +410,7 @@ function initDataHospital(data, domId, name) {
             pageNumber: 1, //初始化加载第一页
             pagination: false,//是否分页
             sidePagination: 'client',//server:服务器端分页|client：前端分页
-            rowStyle:rowStyle
+            rowStyle: rowStyle
         })
 }
 
@@ -503,6 +503,10 @@ function initDistrictDataAnalysis(data) {
     var shoeData = data.filter(item => item['物资类型'] == '鞋套')
     var diapersData = data.filter(item => item['物资类型'] == '纸尿裤')
     var thermometerData = data.filter(item => item['物资类型'] == '体温计')
+    var underwearData = data.filter(item => item['物资类型'] == '保暖内衣')
+    var laundryData = data.filter(item => item['物资类型'] == '洗衣液')
+    var toiletWaterData = data.filter(item => item['物资类型'] == '花露水')
+
     let staticArray = [...staticDistrictArray, '-'];
     let staticField = '区';
     return {
@@ -556,6 +560,21 @@ function initDistrictDataAnalysis(data) {
                 name: '体温计',
                 type: 'mask',
                 data: staticForCommonNoZero(getTotalCount(thermometerData), thermometerData, staticArray, staticField)
+            },
+            {
+                name: '保暖内衣',
+                type: 'mask',
+                data: staticForCommonNoZero(getTotalCount(underwearData), underwearData, staticArray, staticField)
+            },
+            {
+                name: '洗衣液',
+                type: 'mask',
+                data: staticForCommonNoZero(getTotalCount(laundryData), laundryData, staticArray, staticField)
+            },
+            {
+                name: '花露水',
+                type: 'mask',
+                data: staticForCommonNoZero(getTotalCount(toiletWaterData), toiletWaterData, staticArray, staticField)
             },
 
         ]
@@ -709,7 +728,6 @@ $.when(
             initHospitalItem(shoe, 'hospitalShoe', '鞋套')
             initHospitalItem(diapers, 'hospitalDiapers', '纸尿裤')
             initHospitalItem(thermometer, 'hospitalThermometer', '体温计')
-
 
             $('#hospitalTable')
                 .bootstrapTable({
