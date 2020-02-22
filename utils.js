@@ -307,6 +307,10 @@ function getProductType(string) {
         return '鞋套'
     } else if (string.indexOf('保暖内衣') >= 0) {
         return '保暖内衣'
+    } else if (string.indexOf('洗衣液') >= 0) {
+        return '洗衣液'
+    } else if (string.indexOf('花露水') >= 0) {
+        return '花露水'
     } else if (string.indexOf('制氧机') >= 0) {
         return '制氧机'
     } else {

@@ -683,6 +683,12 @@ $.when(
             var underwear = initTypeDataAnalysis(data, '保暖内衣');
             initDataCommon(underwear, 'underwear', '保暖内衣')
 
+            var laundry = initTypeDataAnalysis(data, '洗衣液');
+            initDataCommon(laundry, 'laundry', '洗衣液')
+
+            var toiletWater = initTypeDataAnalysis(data, '花露水');
+            initDataCommon(toiletWater, 'toiletWater', '花露水')
+
             function filterLocationAndHospital(data) {
                 return data.totalData.filter(item => item['接收单位类型'] == '医院' && item['市'] == '武汉市')
             }
