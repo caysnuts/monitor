@@ -505,7 +505,10 @@ function initDistrictDataAnalysis(data) {
     var underwearData = data.filter(item => item['物资类型'] == '保暖内衣')
     var laundryData = data.filter(item => item['物资类型'] == '洗衣液')
     var toiletWaterData = data.filter(item => item['物资类型'] == '花露水')
-
+    var chinesePatentData = data.filter(item => item['物资类型'] == '中成药')
+    var medicineData = data.filter(item => item['物资类型'] == '西药')
+    var healthProductsData = data.filter(item => item['物资类型'] == '保健品')
+    var devilData = data.filter(item => item['物资类型'] == '中药注射液')
     let staticArray = [...staticDistrictArray, '-'];
     let staticField = '区';
     return {
@@ -535,6 +538,27 @@ function initDistrictDataAnalysis(data) {
                 type: 'mask',
                 data: staticForCommonNoZero(getTotalCount(goggleData), goggleData, staticArray, staticField)
             },
+            {
+                name: '中成药',
+                type: 'mask',
+                data: staticForCommonNoZero(getTotalCount(chinesePatentData), chinesePatentData, staticArray, staticField)
+            },
+            {
+                name: '西药',
+                type: 'mask',
+                data: staticForCommonNoZero(getTotalCount(medicineData), medicineData, staticArray, staticField)
+            },
+            {
+                name: '保健品',
+                type: 'mask',
+                data: staticForCommonNoZero(getTotalCount(healthProductsData), healthProductsData, staticArray, staticField)
+            },
+            {
+                name: '中药注射液',
+                type: 'mask',
+                data: staticForCommonNoZero(getTotalCount(devilData), devilData, staticArray, staticField)
+            },
+
             {
                 name: '空气净化器',
                 type: 'mask',
@@ -575,7 +599,6 @@ function initDistrictDataAnalysis(data) {
                 type: 'mask',
                 data: staticForCommonNoZero(getTotalCount(toiletWaterData), toiletWaterData, staticArray, staticField)
             },
-
         ]
     }
 }
@@ -615,10 +638,11 @@ $.when(
     $.get('./0219.json'),
     $.get('./0220.json'),
     $.get('./0221.json'),
+    $.get('./0222.json'),
 )
     .then(function (data_0130, data_0201, data_0202, data_0203, data_0204, data_0206, data_0207,
                     data_0208, data_0209, data_0210, data_0211, data_0212, data_0213, data_0214,
-                    data_0215, data_0217, data_0218, data_0219, data_0220, data_0221) {
+                    data_0215, data_0217, data_0218, data_0219, data_0220, data_0221, data_0222) {
         var data_0130_format = Format(data_0130[0], '1月30日');
         var data_0201_format = Format(data_0201[0], '2月01日');
         var data_0202_format = Format(data_0202[0], '2月02日');
@@ -639,7 +663,9 @@ $.when(
         var data_0219_format = Format(data_0219[0], '2月19日');
         var data_0220_format = Format(data_0220[0], '2月20日');
         var data_0221_format = Format(data_0221[0], '2月21日');
+        var data_0222_format = Format(data_0222[0], '2月22日');
         var data = merge(
+            data_0222_format,
             data_0221_format,
             data_0220_format,
             data_0219_format,
@@ -804,6 +830,7 @@ $.when(
             getDaliyData(data_0219_format, index);
             getDaliyData(data_0220_format, index);
             getDaliyData(data_0221_format, index);
+            getDaliyData(data_0222_format, index);
             return {
                 '医院': hospital_data,
                 '指挥部': zhihui_data,
