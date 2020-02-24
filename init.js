@@ -617,22 +617,31 @@ $.get('./hospital.json', function (data) {
 })
 
 $.get('./doctor-sacrifice.json', function (data) {
-    const tempData = data.map((item)=>({
+    const tempData = data.map((item) => ({
         ...item,
-        timeStamp:new Date(item.time)*1
+        timeStamp: new Date(item.time) * 1
     }))
-    const finalData = tempData.sort((a,b)=> a.timeStamp - b.timeStamp)
+    const finalData = tempData.sort((a, b) => a.timeStamp - b.timeStamp)
     console.log(finalData)
+
     function renderDoctorItem(doctor) {
-        return `<div class="doctor-sacrifice-item">
-                <div class="doctor-sacrifice-item-name">${doctor.name}</div>
-                <div class="doctor-sacrifice-item-age">${doctor.age} 岁</div>
-                <div class="doctor-sacrifice-item-hospital">${doctor.hospital}</div>
-                <div class="doctor-sacrifice-item-time">${doctor.time.replace(/\//g,'.')}</div>
-            </div>`;
+        let html = `<div class="doctor-sacrifice-item">
+                    <div class="doctor-sacrifice-item-name">${doctor.name}</div>
+                    <div class="doctor-sacrifice-item-age">${doctor.age} 岁</div>
+                    <div class="doctor-sacrifice-item-hospital">${doctor.hospital}</div>
+                    <div class="doctor-sacrifice-item-time">${doctor.time.replace(/\//g, '.')}</div>
+                </div>
+              `;
+        if (doctor.motto) {
+            html = html + `<div class="doctor-sacrifice-motto">
+                    <div>${doctor.motto || ''}</div>
+                </div>`;
+        }
+        return html
     }
+
     let html = '';
-    finalData.map((item)=>{
+    finalData.map((item) => {
         html = html + renderDoctorItem(item)
     })
     $('#doctorSacrificeList')
