@@ -72,3 +72,28 @@ section {
     display: flex;
     flex-wrap: wrap;
 }
+
+.doctor-sacrifice-list{
+
+}
+.doctor-sacrifice-item{
+    margin: 10px 20px;
+    display: flex;
+}
+.doctor-sacrifice-item-name{
+    width: 200px;
+    font-weight: 600;
+}
+.doctor-sacrifice-item-age{
+    width: 100px;
+    margin-left: 20px;
+}
+.doctor-sacrifice-item-hospital{
+    width: 400px;
+    margin-left: 20px;
+}
+.doctor-sacrifice-item-time{
+    width: 200px;
+    margin-left: 20px;
+    font-weight: 600;
+}
