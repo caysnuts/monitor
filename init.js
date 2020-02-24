@@ -634,7 +634,7 @@ $.get('./doctor-sacrifice.json', function (data) {
               `;
         if (doctor.motto) {
             html = html + `<div class="doctor-sacrifice-motto">
-                    <div>${doctor.motto || ''}</div>
+                    <div>" ${doctor.motto || ''} "</div>
                 </div>`;
         }
         return html
