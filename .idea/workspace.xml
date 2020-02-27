@@ -1,7 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="02a6e104-b1b1-4e67-8df3-12dc1b83e168" name="Default Changelist" comment="" />
+    <list default="true" id="02a6e104-b1b1-4e67-8df3-12dc1b83e168" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/vue/monitor/public/0130.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/public/0201.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/public/0202.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/public/0203.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/public/0204.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/public/0206.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/public/0207.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/public/0208.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/public/0209.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/public/0210.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/public/0211.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/public/0212.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/public/0213.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/public/0214.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/public/0215.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/public/0217.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/public/0218.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/public/0219.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/public/0220.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/public/0221.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/public/0222.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/public/0223.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/public/0224.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/public/doctor-sacrifice.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/src/components/MedicalStaffSacrificeList.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/src/components/StaticTable.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/src/components/chart.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/src/components/header.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/src/components/info.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/src/components/table.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/src/constant.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/src/utils.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/monitor/vue.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -12,10 +47,17 @@
       <list>
         <option value="tsconfig.json" />
         <option value="HTML File" />
+        <option value="CSS File" />
+        <option value="Vue Single File Component" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1XnzaWiEfQGsGSPSqu5s02XaeoL" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -24,11 +66,21 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/vue/monitor/public" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/vue/monitor/public" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/vue/monitor/public" />
+      <recent name="$PROJECT_DIR$/vue/monitor/src/components" />
+      <recent name="$PROJECT_DIR$/vue/monitor/src/assets" />
+      <recent name="$PROJECT_DIR$/vue/monitor/src/data" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
@@ -42,7 +94,26 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1581696709181</updated>
-      <workItem from="1581696710818" duration="5919000" />
+      <workItem from="1581696710818" duration="6309000" />
+      <workItem from="1581707670395" duration="40761000" />
+      <workItem from="1581923976408" duration="2985000" />
+      <workItem from="1581988472900" duration="7813000" />
+      <workItem from="1582021189104" duration="6157000" />
+      <workItem from="1582125265121" duration="2312000" />
+      <workItem from="1582128309323" duration="912000" />
+      <workItem from="1582164543552" duration="7682000" />
+      <workItem from="1582251120120" duration="3869000" />
+      <workItem from="1582297849870" duration="932000" />
+      <workItem from="1582387010842" duration="5174000" />
+      <workItem from="1582469814472" duration="761000" />
+      <workItem from="1582514997720" duration="24000" />
+      <workItem from="1582518042539" duration="4489000" />
+      <workItem from="1582544390886" duration="1402000" />
+      <workItem from="1582593362683" duration="7319000" />
+      <workItem from="1582641939756" duration="210000" />
+      <workItem from="1582680883259" duration="90000" />
+      <workItem from="1582711796764" duration="682000" />
+      <workItem from="1582719544663" duration="24720000" />
     </task>
     <servers />
   </component>
@@ -50,10 +121,14 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="969" y="674" width="824" height="538" key="find.popup" timestamp="1581701221827">
+    <state x="1524" y="491" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1582724197513">
       <screen x="0" y="23" width="2560" height="1337" />
     </state>
-    <state x="969" y="674" width="824" height="538" key="find.popup/0.23.2560.1337@0.23.2560.1337" timestamp="1581701221827" />
+    <state x="1524" y="491" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.2560.1337@0.23.2560.1337" timestamp="1582724197513" />
+    <state x="969" y="674" width="824" height="538" key="find.popup" timestamp="1582787265253">
+      <screen x="0" y="23" width="2560" height="1337" />
+    </state>
+    <state x="969" y="674" width="824" height="538" key="find.popup/0.23.2560.1337@0.23.2560.1337" timestamp="1582787265253" />
     <state x="893" y="348" width="670" height="675" key="run.anything.popup" timestamp="1581701707153">
       <screen x="0" y="23" width="2560" height="1337" />
     </state>
