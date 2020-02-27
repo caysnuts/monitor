@@ -1,7 +1,7 @@
 <template>
     <div>
         <h3>医护人员牺牲名单</h3>
-        <div style="text-align: right">不应该忘记他们</div>
+        <div style="text-align: right;padding-right: 2em;">不应该忘记他们</div>
         <div><a href="https://github.com/caysnuts/monitor/issues/1" style="color: blueviolet">添加地址</a></div>
         <div>
             <div v-for="item in doctorList" :key="item.name">
@@ -47,7 +47,7 @@
           }
         },
         mounted() {
-            this.$axios.get(`/doctor-sacrifice.json`)
+            this.$axios.get(`./doctor-sacrifice.json`)
                 .then(response => {
                     this.list = response.data
                 })
@@ -57,6 +57,7 @@
 
 <style scoped>
     h3{
+        padding-top: 4em;
         text-align: center;
         font-size: 20px;
     }

@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <Header />
-        <b-tabs pills content-class="mt-3">
+        <b-tabs pills card>
             <b-tab title="每日" active>
                 <div v-if="chartDailyDataList.length > 0">
                     <Chart v-for="item in chartDailyDataList" :key="item.name" :origin-data="item.data"
@@ -10,32 +10,7 @@
             </b-tab>
             <b-tab title="数据查询">
                 <div>
-                    <b-button class="btn-filter" @click="toggleFilter">筛选</b-button>
-                    <b-button class="btn-filter" @click="reset">重置</b-button>
-                    <div v-show="toggleFilterValue" class="selectGroup">
-                        <div class="selectItem">
-                            <div>时间：</div>
-                            <b-form-select plain="true" size="sm" v-model="selectTime" :options="timeArrayOption"
-                                           multiple
-                                           :select-size="10" class="formSelect"></b-form-select>
-                        </div>
-                        <div class="selectItem">
-                            <div>物资类型：</div>
-                            <b-form-select size="sm" v-model="selectProductType" :options="ProductType" multiple
-                                           :select-size="10" class="formSelect"></b-form-select>
-                        </div>
-                        <div class="selectItem">
-                            <div>区：</div>
-                            <b-form-select size="sm" v-model="selectLocationType" :options="LocationType" multiple
-                                           :select-size="10" class="formSelect"></b-form-select>
-                        </div>
-                        <div class="selectItem">
-                            <div>接收单位类型：</div>
-                            <b-form-select size="sm" v-model="selectReceiveType" :options="ReceiveType" multiple
-                                           :select-size="10" class="formSelect"></b-form-select>
-                        </div>
-                    </div>
-                    <Table :list="tableData" />
+                    <Table :list="originData" />
                 </div>
             </b-tab>
             <b-tab title="数据统计">
@@ -61,7 +36,7 @@
     import Chart from './components/chart.vue'
     import MedicalStaffSacrificeList from './components/MedicalStaffSacrificeList.vue'
     import Info from './components/info.vue'
-    import { chartLineSeriesNameList, LocationType, ProductType, ReceiveType, timeArray } from './constant'
+    import { chartLineSeriesNameList, ProductType, ReceiveType, timeArray } from './constant'
     import { FormatData, getTotalCount } from './utils';
 
     export default {
@@ -76,14 +51,7 @@
         },
         data() {
             return {
-                LocationType,
-                ProductType,
-                ReceiveType,
                 originData: [],
-                selectTime: [],
-                selectProductType: [],
-                selectLocationType: [],
-                selectReceiveType: [],
                 timeArray,
                 chartDailyData: {},
                 chartDailyDataList: [],
@@ -91,36 +59,10 @@
                 toggleFilterValue: false,
             }
         },
-        computed: {
-            timeArrayOption() {
-                return this.timeArray ? this.timeArray.map(item => ({
-                    value: item,
-                    text: item
-                })) : []
-            },
-            tableData() {
-                let tableData = this.originData;
-                if (this.selectTime.length > 0) {
-                    tableData = tableData.filter(item => this.selectTime.includes(item['时间']))
-                }
-                if (this.selectProductType.length > 0) {
-                    tableData = tableData.filter(item => this.selectProductType.includes(item['物资类型']))
-                }
-                if (this.selectLocationType.length > 0) {
-                    tableData = tableData.filter(item => this.selectLocationType.includes(item['区']))
-                }
-                if (this.selectReceiveType.length > 0) {
-                    tableData = tableData.filter(item => this.selectReceiveType.includes(item['接收单位类型']))
-                }
-                return tableData
-            }
-        },
+        computed: {},
         methods: {
-            toggleFilter(){
-              this.toggleFilterValue = !this.toggleFilterValue
-            },
             renderData(time) {
-                return this.$axios.get(`/${time}.json`)
+                return this.$axios.get(`./${time}.json`)
                     .then(response => {
                         const formatData = FormatData({
                             data: response.data,
@@ -177,19 +119,14 @@
                 })
                 this.tableStaticDataList = tableStaticDataList
             },
-            reset() {
-                this.selectTime = [];
-                this.selectProductType = [];
-                this.selectLocationType = [];
-                this.selectReceiveType = [];
-            }
         },
         mounted() {
             let ajaxAll = this.timeArray.map(item => this.renderData(item))
-            Promise.all(ajaxAll).then(()=>{
-                this.renderChartListData()
-                this.renderStaticChartData()
-            })
+            Promise.all(ajaxAll)
+                .then(() => {
+                    this.renderChartListData()
+                    this.renderStaticChartData()
+                })
         }
     }
 </script>
@@ -206,17 +143,6 @@
         font-size: 16px;
         width: 100vw;
         padding: 1%;
-    }
-
-    .selectGroup {
-        font-size: 12px;
-        width: 100%;
-        display: flex;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        border: solid 1px black;
-        border-radius: 20px;
-        margin: 10px;
     }
 
     .selectItem {
@@ -236,10 +162,7 @@
         flex-wrap: wrap;
     }
 
-    .btn-filter {
-        font-size: 1em;
-        margin: 0px 20px;
-    }
+
 
     .dark {
         background: #2c3e50;
